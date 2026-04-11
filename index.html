@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>wellingtonxp • Gestão Financeira</title>
+    <!-- Google Fonts + Chart.js + Font Awesome (ícones) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0B0B;
+            color: #FFFFFF;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* SPLASH SCREEN */
+        .splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1E1E2F, #0B0B0B);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 2000;
+            transition: opacity 0.6s ease, visibility 0.6s;
+            backdrop-filter: blur(2px);
+        }
+
+        .splash-content {
+            text-align: center;
+            animation: fadeZoom 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        @keyframes fadeZoom {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .splash h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF7A00, #FFB347);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .splash p {
+            color: #A0A0A0;
+            margin-top: 12px;
+            font-weight: 400;
+        }
+
+        .btn-entrar {
+            margin-top: 48px;
+            background: #FF7A00;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0B0B0B;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 122, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-entrar:active {
+            transform: scale(0.96);
+            box-shadow: 0 4px 12px rgba(255, 122, 0, 0.5);
+        }
+
+        .spinner-load {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-top: 2px solid #0B0B0B;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* APP PRINCIPAL (inicialmente escondido) */
+        .app-container {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #121212;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        /* padding e layout */
+        .main-content {
+            padding: 20px 20px 90px 20px;
+        }
+
+        /* Card padrão */
+        .card {
+            background: rgba(30, 30, 40, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 32px rgba(0,0,0,0.4);
+        }
+
+        /* Saldo principal */
+        .saldo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .saldo-valor {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        .btn-olho {
+            background: none;
+            border: none;
+            color: #A0A0A0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .btn-olho:hover { color: #FF7A00; }
+
+        /* resumo 3 colunas */
+        .resumo-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .resumo-item {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border-radius: 24px;
+            padding: 16px;
+            text-align: center;
+        }
+        .resumo-label {
+            font-size: 0.8rem;
+            color: #A0A0A0;
+            margin-bottom: 6px;
+        }
+        .resumo-num {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .verde { color: #00C853; }
+        .vermelho { color: #FF3B30; }
+
+        /* gráficos em linha */
+        .graficos-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        canvas {
+            max-height: 220px;
+            width: 100%;
+        }
+
+        /* lista de transações */
+        .transacoes-titulo {
+            font-size: 1.2rem;
+            margin: 12px 0 16px;
+            font-weight: 600;
+        }
+        .transacao-item {
+            background: rgba(20, 20, 28, 0.9);
+            border-radius: 24px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.2s ease;
+            animation: fadeSlideUp 0.3s ease;
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .transacao-item:hover {
+            transform: scale(1.01);
+            background: #262630;
+        }
+        .transacao-icon {
+            width: 48px;
+            height: 48px;
+            background: #2A2A35;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .transacao-info {
+            flex: 1;
+        }
+        .transacao-nome {
+            font-weight: 600;
+        }
+        .transacao-data {
+            font-size: 0.7rem;
+            color: #A0A0A0;
+        }
+        .transacao-valor {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .transacao-acoes {
+            display: flex;
+            gap: 12px;
+        }
+        .btn-acao {
+            background: none;
+            border: none;
+            color: #A0A0A0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .btn-acao:hover { color: #FF7A00; }
+        .btn-excluir:hover { color: #FF3B30; }
+
+        /* FAB */
+        .fab {
+            position: fixed;
+            bottom: 80px;
+            right: 24px;
+            background: #FF7A00;
+            width: 56px;
+            height: 56px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 16px rgba(255, 122, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 300;
+        }
+        .fab:active { transform: scale(0.92); }
+        .fab i { font-size: 1.8rem; color: #0B0B0B; }
+
+        /* MENU INFERIOR */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(18, 18, 24, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 16px 24px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px 28px 0 0;
+            z-index: 400;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: #A0A0A0;
+            font-size: 0.7rem;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        .nav-item i { font-size: 1.4rem; }
+        .nav-item.active { color: #FF7A00; font-weight: 500; }
+        .nav-item.central-mais {
+            background: #FF7A00;
+            color: #0B0B0B;
+            width: 52px;
+            height: 52px;
+            border-radius: 40px;
+            justify-content: center;
+            margin-top: -18px;
+            box-shadow: 0 4px 12px rgba(255,122,0,0.4);
+        }
+        .nav-item.central-mais i { font-size: 1.6rem; }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-card {
+            background: #1E1E28;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 48px;
+            padding: 28px;
+            animation: fadeZoom 0.2s ease;
+        }
+        .modal-card input, .modal-card select {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            background: #2C2C38;
+            border: none;
+            border-radius: 28px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-modal {
+            background: #FF7A00;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 12px;
+            cursor: pointer;
+        }
+
+        /* telas secundárias */
+        .screen {
+            display: block;
+        }
+        .screen.hidden {
+            display: none;
+        }
+
+        /* config */
+        .config-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .toggle-switch {
+            width: 44px;
+            background: #333;
+            border-radius: 30px;
+            padding: 4px;
+            cursor: pointer;
+        }
+        hr {
+            border-color: #2a2a2a;
+            margin: 16px 0;
+        }
+        @media (max-width: 480px) {
+            .saldo-valor { font-size: 2rem; }
+            .resumo-num { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div class="splash" id="splashScreen">
+    <div class="splash-content">
+        <h1>wellingtonxp</h1>
+        <p>Seu controle financeiro inteligente</p>
+        <button class="btn-entrar" id="btnEntrar">
+            <span>Entrar</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- APP PRINCIPAL -->
+<div class="app-container" id="appPrincipal">
+    <div class="main-content">
+        <!-- telas dinamicas: inicio, relatorios, cartoes, config -->
+        <div id="screenInicio" class="screen">
+            <!-- CARD SALDO -->
+            <div class="card">
+                <div class="saldo-header">
+                    <span style="font-weight:500;">Saldo disponível</span>
+                    <button class="btn-olho" id="toggleSaldoBtn"><i class="far fa-eye"></i></button>
+                </div>
+                <div class="saldo-valor" id="saldoDisplay">R$ 0,00</div>
+                <div style="font-size:0.75rem; color:#A0A0A0;">Saldo atualizado em tempo real</div>
+            </div>
+
+            <!-- RESUMO MENSAL -->
+            <div class="card">
+                <div style="margin-bottom: 12px;">📊 Resumo do mês</div>
+                <div class="resumo-grid">
+                    <div class="resumo-item"><div class="resumo-label">Receitas</div><div class="resumo-num verde" id="totalReceitas">R$0</div></div>
+                    <div class="resumo-item"><div class="resumo-label">Despesas</div><div class="resumo-num vermelho" id="totalDespesas">R$0</div></div>
+                    <div class="resumo-item"><div class="resumo-label">Saldo mês</div><div class="resumo-num" id="saldoMes">R$0</div></div>
+                </div>
+            </div>
+
+            <!-- GRÁFICOS -->
+            <div class="card">
+                <div class="graficos-wrapper">
+                    <div><span style="font-weight:500;">📈 Evolução do saldo</span><canvas id="lineChart" width="400" height="180"></canvas></div>
+                    <div><span style="font-weight:500;">🥧 Gastos por categoria</span><canvas id="pieChart" width="400" height="180"></canvas></div>
+                </div>
+            </div>
+
+            <!-- TRANSAÇÕES -->
+            <div class="transacoes-titulo"><i class="fas fa-list-ul"></i> Últimas movimentações</div>
+            <div id="transacoesLista"></div>
+        </div>
+
+        <!-- TELA RELATÓRIOS (gráficos expandidos + insights) -->
+        <div id="screenRelatorios" class="screen hidden">
+            <div class="card">
+                <h3 style="margin-bottom: 16px;">Relatórios financeiros</h3>
+                <canvas id="lineChartFull" width="400" height="200"></canvas>
+                <div style="margin-top: 24px;"><canvas id="pieChartFull" width="400" height="200"></canvas></div>
+                <div class="config-item" style="margin-top:20px;"><span>Média de gastos diários</span><strong id="mediaGastos">R$0</strong></div>
+            </div>
+        </div>
+
+        <!-- TELA CARTÕES -->
+        <div id="screenCartoes" class="screen hidden">
+            <div class="card">
+                <i class="fas fa-credit-card" style="font-size: 2rem; color:#FF7A00;"></i>
+                <h3 style="margin: 16px 0;">Meus cartões</h3>
+                <div style="background: linear-gradient(135deg, #2C2C38, #1A1A24); border-radius: 28px; padding: 20px;">
+                    <div style="letter-spacing: 2px;">••••  ••••  ••••  4821</div>
+                    <div style="margin-top: 16px;">WELLINGTON XP</div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 16px;"><span>Válido até 12/28</span><i class="fab fa-cc-mastercard"></i></div>
+                </div>
+                <p style="margin-top: 20px; color:#A0A0A0;">Limite disponível: <strong class="verde">R$ 12.500,00</strong></p>
+            </div>
+        </div>
+
+        <!-- TELA CONFIGURAÇÕES -->
+        <div id="screenConfig" class="screen hidden">
+            <div class="card">
+                <h3>⚙️ Configurações</h3>
+                <div class="config-item"><span>Mostrar sempre saldo</span><div class="toggle-switch" id="toggleConfigSaldo"><i class="fas fa-eye"></i></div></div>
+                <hr>
+                <div class="config-item"><span>Carregar dados via CSV</span><input type="file" id="csvUpload" accept=".csv" style="background:#2C2C38; border-radius: 30px; padding: 6px;"></div>
+                <button id="resetMockBtn" class="btn-modal" style="background:#333;">Restaurar dados mock</button>
+                <p style="font-size:0.7rem; margin-top:16px;">Formato CSV: Data,Tipo,Categoria,Valor,Descrição<br>Ex: 2025-03-01,receita,Salário,5000.00,Pagamento</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAB -->
+    <div class="fab" id="fabAdd"><i class="fas fa-plus"></i></div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+        <button class="nav-item active" data-nav="inicio"><i class="fas fa-home"></i><span>Início</span></button>
+        <button class="nav-item" data-nav="relatorios"><i class="fas fa-chart-line"></i><span>Relatórios</span></button>
+        <button class="nav-item central-mais" id="navCentralMais"><i class="fas fa-plus"></i></button>
+        <button class="nav-item" data-nav="cartoes"><i class="fas fa-credit-card"></i><span>Cartões</span></button>
+        <button class="nav-item" data-nav="config"><i class="fas fa-sliders-h"></i><span>Config</span></button>
+    </div>
+</div>
+
+<!-- MODAL ADICIONAR/EDITAR -->
+<div id="modalTransacao" class="modal">
+    <div class="modal-card">
+        <h3 id="modalTitle">Nova transação</h3>
+        <input type="text" id="modalDesc" placeholder="Descrição (ex: Uber)" autocomplete="off">
+        <select id="modalTipo">
+            <option value="receita">Receita (+) </option>
+            <option value="despesa">Despesa (-) </option>
+        </select>
+        <input type="text" id="modalCategoria" placeholder="Categoria (ex: Transporte, Alimentação)">
+        <input type="number" id="modalValor" placeholder="Valor (R$)" step="0.01">
+        <input type="date" id="modalData">
+        <button class="btn-modal" id="salvarTransacaoBtn">Salvar</button>
+        <button class="btn-modal" id="fecharModalBtn" style="background:#2C2C38; margin-top:8px;">Cancelar</button>
+    </div>
+</div>
+
+<script>
+    // ---------- DADOS MOCK + PERSISTÊNCIA ----------
+    let transacoes = [];
+    let editingId = null;
+    let saldoVisivel = true;
+
+    // dados mock iniciais
+    const mockTransacoes = [
+        { id: 1, data: "2025-03-01", tipo: "receita", categoria: "Salário", valor: 5200.00, descricao: "Salário março" },
+        { id: 2, data: "2025-03-05", tipo: "despesa", categoria: "Alimentação", valor: 320.50, descricao: "Mercado" },
+        { id: 3, data: "2025-03-08", tipo: "despesa", categoria: "Transporte", valor: 58.90, descricao: "Uber" },
+        { id: 4, data: "2025-03-12", tipo: "despesa", categoria: "Lazer", valor: 189.90, descricao: "Cinema" },
+        { id: 5, data: "2025-03-15", tipo: "receita", categoria: "Freelancer", valor: 850.00, descricao: "Projeto Web" },
+        { id: 6, data: "2025-03-18", tipo: "despesa", categoria: "Saúde", valor: 145.00, descricao: "Farmácia" },
+        { id: 7, data: "2025-03-20", tipo: "despesa", categoria: "Alimentação", valor: 210.30, descricao: "Restaurante" },
+        { id: 8, data: "2025-02-25", tipo: "despesa", categoria: "Assinatura", valor: 49.90, descricao: "Streaming" },
+    ];
+    
+    function loadMock() {
+        transacoes = JSON.parse(JSON.stringify(mockTransacoes));
+        salvarLocal();
+        atualizarTudo();
+    }
+
+    function salvarLocal() {
+        localStorage.setItem("wellingtonxp_transacoes", JSON.stringify(transacoes));
+    }
+
+    function carregarLocal() {
+        const local = localStorage.getItem("wellingtonxp_transacoes");
+        if(local) transacoes = JSON.parse(local);
+        else loadMock();
+        atualizarTudo();
+    }
+
+    // helpers cálculos
+    function getSaldoTotal() {
+        return transacoes.reduce((acc, t) => acc + (t.tipo === "receita" ? t.valor : -t.valor), 0);
+    }
+    function getResumoMes() {
+        const now = new Date();
+        const ano = now.getFullYear();
+        const mes = now.getMonth();
+        let receitas = 0, despesas = 0;
+        transacoes.forEach(t => {
+            const dt = new Date(t.data);
+            if(dt.getFullYear() === ano && dt.getMonth() === mes) {
+                if(t.tipo === "receita") receitas += t.valor;
+                else despesas += t.valor;
+            }
+        });
+        return { receitas, despesas, saldo: receitas - despesas };
+    }
+
+    // agrupar despesas por categoria (pizza)
+    function getDespesasPorCategoria() {
+        const map = new Map();
+        transacoes.forEach(t => {
+            if(t.tipo === "despesa") {
+                map.set(t.categoria, (map.get(t.categoria) || 0) + t.valor);
+            }
+        });
+        return { labels: Array.from(map.keys()), values: Array.from(map.values()) };
+    }
+
+    // evolução do saldo (ordenado por data)
+    function getEvolucaoSaldo() {
+        const sorted = [...transacoes].sort((a,b) => new Date(a.data) - new Date(b.data));
+        let running = 0;
+        const pontos = [];
+        const datas = [];
+        sorted.forEach(t => {
+            running += t.tipo === "receita" ? t.valor : -t.valor;
+            pontos.push(running);
+            datas.push(t.data.slice(5));
+        });
+        return { datas, saldos: pontos };
+    }
+
+    // Atualizar UI completa
+    let lineChart, pieChart, lineFull, pieFull;
+    function atualizarTudo() {
+        const saldo = getSaldoTotal();
+        const saldoElem = document.getElementById("saldoDisplay");
+        if(saldoVisivel) saldoElem.innerText = `R$ ${saldo.toFixed(2).replace('.',',')}`;
+        else saldoElem.innerText = "••••••";
+        const resumo = getResumoMes();
+        document.getElementById("totalReceitas").innerHTML = `R$ ${resumo.receitas.toFixed(2)}`;
+        document.getElementById("totalDespesas").innerHTML = `R$ ${resumo.despesas.toFixed(2)}`;
+        document.getElementById("saldoMes").innerHTML = `R$ ${resumo.saldo.toFixed(2)}`;
+        renderTransacoes();
+        updateCharts();
+        if(document.getElementById("mediaGastos")) {
+            let totalGastosMes = resumo.despesas;
+            let diasMes = new Date(new Date().getFullYear(), new Date().getMonth()+1, 0).getDate();
+            let media = totalGastosMes / diasMes;
+            document.getElementById("mediaGastos").innerHTML = `R$ ${media.toFixed(2)}`;
+        }
+        salvarLocal();
+    }
+
+    function renderTransacoes() {
+        const container = document.getElementById("transacoesLista");
+        if(!container) return;
+        const sorted = [...transacoes].sort((a,b)=> new Date(b.data) - new Date(a.data));
+        container.innerHTML = "";
+        sorted.forEach(t => {
+            const card = document.createElement("div");
+            card.className = "transacao-item";
+            const isReceita = t.tipo === "receita";
+            const emojiMap = { Alimentação:"🍔", Transporte:"🚗", Lazer:"🎬", Saúde:"💊", Salário:"💼", Freelancer:"💻", Assinatura:"🎧" };
+            const icon = emojiMap[t.categoria] || (isReceita ? "💰" : "💸");
+            card.innerHTML = `
+                <div class="transacao-icon">${icon}</div>
+                <div class="transacao-info">
+                    <div class="transacao-nome">${t.descricao}</div>
+                    <div class="transacao-data">${new Date(t.data).toLocaleDateString()}</div>
+                </div>
+                <div class="transacao-valor" style="color: ${isReceita ? '#00C853' : '#FF3B30'}">
+                    ${isReceita ? '+' : '-'} R$ ${t.valor.toFixed(2)}
+                </div>
+                <div class="transacao-acoes">
+                    <button class="btn-acao" data-editar="${t.id}"><i class="fas fa-pen"></i></button>
+                    <button class="btn-acao btn-excluir" data-excluir="${t.id}"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        document.querySelectorAll("[data-editar]").forEach(btn => {
+            btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.editar); editarTransacao(id); });
+        });
+        document.querySelectorAll("[data-excluir]").forEach(btn => {
+            btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.excluir); excluirTransacao(id); });
+        });
+    }
+
+    function excluirTransacao(id) {
+        transacoes = transacoes.filter(t => t.id !== id);
+        atualizarTudo();
+    }
+    function editarTransacao(id) {
+        const t = transacoes.find(tx => tx.id === id);
+        if(t){
+            editingId = id;
+            document.getElementById("modalTitle").innerText = "Editar transação";
+            document.getElementById("modalDesc").value = t.descricao;
+            document.getElementById("modalTipo").value = t.tipo;
+            document.getElementById("modalCategoria").value = t.categoria;
+            document.getElementById("modalValor").value = t.valor;
+            document.getElementById("modalData").value = t.data;
+            document.getElementById("modalTransacao").classList.add("active");
+        }
+    }
+    function salvarTransacaoModal() {
+        const desc = document.getElementById("modalDesc").value.trim();
+        const tipo = document.getElementById("modalTipo").value;
+        const categoria = document.getElementById("modalCategoria").value.trim();
+        let valor = parseFloat(document.getElementById("modalValor").value);
+        const data = document.getElementById("modalData").value;
+        if(!desc || !categoria || isNaN(valor) || !data) { alert("Preencha todos os campos"); return; }
+        if(valor <=0) { alert("Valor deve ser positivo"); return; }
+        if(editingId !== null) {
+            const index = transacoes.findIndex(t => t.id === editingId);
+            if(index !== -1) {
+                transacoes[index] = { ...transacoes[index], descricao: desc, tipo, categoria, valor, data };
+            }
+            editingId = null;
+        } else {
+            const newId = Date.now();
+            transacoes.push({ id: newId, data, tipo, categoria, valor, descricao: desc });
+        }
+        fecharModal();
+        atualizarTudo();
+    }
+    function fecharModal() {
+        document.getElementById("modalTransacao").classList.remove("active");
+        editingId = null;
+        document.getElementById("modalTitle").innerText = "Nova transação";
+        document.getElementById("modalDesc").value = "";
+        document.getElementById("modalCategoria").value = "";
+        document.getElementById("modalValor").value = "";
+        document.getElementById("modalData").value = new Date().toISOString().slice(0,10);
+    }
+
+    // Gráficos
+    function updateCharts() {
+        const evol = getEvolucaoSaldo();
+        const cat = getDespesasPorCategoria();
+        if(lineChart){ lineChart.destroy(); } if(pieChart){ pieChart.destroy(); }
+        const ctxLine = document.getElementById("lineChart").getContext("2d");
+        lineChart = new Chart(ctxLine, { type: 'line', data: { labels: evol.datas, datasets: [{ label: 'Saldo acumulado', data: evol.saldos, borderColor: '#FF7A00', backgroundColor: 'transparent', tension: 0.2, fill: false }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#fff' } } } } });
+        const ctxPie = document.getElementById("pieChart").getContext("2d");
+        pieChart = new Chart(ctxPie, { type: 'pie', data: { labels: cat.labels, datasets: [{ data: cat.values, backgroundColor: ['#FF7A00','#00C853','#FF3B30','#FFB347','#7B2CBF','#4A9EFF'] }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#fff' } } } } });
+        if(lineFull){ lineFull.destroy(); } if(pieFull){ pieFull.destroy(); }
+        const ctxLineF = document.getElementById("lineChartFull")?.getContext("2d");
+        if(ctxLineF) lineFull = new Chart(ctxLineF, { type: 'line', data: { labels: evol.datas, datasets: [{ label: 'Evolução', data: evol.saldos, borderColor: '#FF7A00' }] }, options: { responsive: true } });
+        const ctxPieF = document.getElementById("pieChartFull")?.getContext("2d");
+        if(ctxPieF) pieFull = new Chart(ctxPieF, { type: 'pie', data: { labels: cat.labels, datasets: [{ data: cat.values, backgroundColor: ['#FF7A00','#00C853','#FF3B30','#FFB347'] }] } });
+    }
+
+    // Navegação entre telas
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+        document.getElementById(`screen${screenId.charAt(0).toUpperCase()+screenId.slice(1)}`).classList.remove('hidden');
+        document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+        if(screenId === 'inicio') document.querySelector('[data-nav="inicio"]').classList.add('active');
+        else if(screenId === 'relatorios') document.querySelector('[data-nav="relatorios"]').classList.add('active');
+        else if(screenId === 'cartoes') document.querySelector('[data-nav="cartoes"]').classList.add('active');
+        else if(screenId === 'config') document.querySelector('[data-nav="config"]').classList.add('active');
+        if(screenId === 'relatorios') updateCharts();
+    }
+
+    // integração CSV
+    document.getElementById("csvUpload")?.addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const text = ev.target.result;
+            const lines = text.split("\n").slice(1);
+            const novas = [];
+            lines.forEach(line => {
+                const cols = line.split(",");
+                if(cols.length >=5) {
+                    const [data, tipo, categoria, valorStr, descricao] = cols;
+                    const valor = parseFloat(valorStr);
+                    if(!isNaN(valor) && data) {
+                        novas.push({ id: Date.now()+Math.random(), data: data.trim(), tipo: tipo.trim().toLowerCase(), categoria: categoria.trim(), valor, descricao: descricao.trim() });
+                    }
+                }
+            });
+            if(novas.length) transacoes.push(...novas);
+            atualizarTudo();
+            alert(`${novas.length} transações importadas!`);
+        };
+        reader.readAsText(file);
+    });
+
+    document.getElementById("resetMockBtn")?.addEventListener("click", () => { loadMock(); atualizarTudo(); });
+    document.getElementById("toggleSaldoBtn")?.addEventListener("click", () => { saldoVisivel = !saldoVisivel; atualizarTudo(); });
+    document.getElementById("fabAdd")?.addEventListener("click", () => { editingId=null; document.getElementById("modalTitle").innerText="Nova transação"; document.getElementById("modalTransacao").classList.add("active"); });
+    document.getElementById("navCentralMais")?.addEventListener("click", () => { editingId=null; document.getElementById("modalTitle").innerText="Nova transação"; document.getElementById("modalTransacao").classList.add("active"); });
+    document.getElementById("salvarTransacaoBtn")?.addEventListener("click", salvarTransacaoModal);
+    document.getElementById("fecharModalBtn")?.addEventListener("click", fecharModal);
+    document.querySelectorAll("[data-nav]").forEach(btn => { btn.addEventListener("click", (e) => { const nav = btn.dataset.nav; if(nav) showScreen(nav); }); });
+
+    // SPLASH E INICIALIZAÇÃO
+    document.getElementById("btnEntrar").addEventListener("click", (e) => {
+        const btn = e.currentTarget;
+        btn.innerHTML = '<div class="spinner-load"></div> Carregando...';
+        btn.disabled = true;
+        setTimeout(() => {
+            document.getElementById("splashScreen").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("splashScreen").style.display = "none";
+                document.getElementById("appPrincipal").style.display = "block";
+                carregarLocal();
+                // contador animado no saldo (efeito cassino)
+                const finalSaldo = getSaldoTotal();
+                let current = 0;
+                const el = document.getElementById("saldoDisplay");
+                const step = finalSaldo / 50;
+                const interval = setInterval(() => {
+                    current += step;
+                    if(current >= finalSaldo) { current = finalSaldo; clearInterval(interval); }
+                    if(saldoVisivel) el.innerText = `R$ ${current.toFixed(2).replace('.',',')}`;
+                    else el.innerText = "••••••";
+                }, 20);
+            }, 400);
+        }, 1200);
+    });
+    // pré definir data atual no modal
+    document.getElementById("modalData").value = new Date().toISOString().slice(0,10);
+</script>
+</body>
+</html>
