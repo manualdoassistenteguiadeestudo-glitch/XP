@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>wellingtonxp • Gestão Financeira</title>
-    <!-- Google Fonts + Chart.js + Font Awesome (ícones) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -14,7 +13,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0B0B0B;
@@ -22,8 +20,6 @@
             overflow-x: hidden;
             min-height: 100vh;
         }
-
-        /* SPLASH SCREEN */
         .splash {
             position: fixed;
             top: 0;
@@ -39,17 +35,14 @@
             transition: opacity 0.6s ease, visibility 0.6s;
             backdrop-filter: blur(2px);
         }
-
         .splash-content {
             text-align: center;
             animation: fadeZoom 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
-
         @keyframes fadeZoom {
             0% { opacity: 0; transform: scale(0.92); }
             100% { opacity: 1; transform: scale(1); }
         }
-
         .splash h1 {
             font-size: 3rem;
             font-weight: 700;
@@ -59,13 +52,11 @@
             color: transparent;
             letter-spacing: -0.5px;
         }
-
         .splash p {
             color: #A0A0A0;
             margin-top: 12px;
             font-weight: 400;
         }
-
         .btn-entrar {
             margin-top: 48px;
             background: #FF7A00;
@@ -84,12 +75,10 @@
             margin-left: auto;
             margin-right: auto;
         }
-
         .btn-entrar:active {
             transform: scale(0.96);
             box-shadow: 0 4px 12px rgba(255, 122, 0, 0.5);
         }
-
         .spinner-load {
             width: 22px;
             height: 22px;
@@ -99,10 +88,7 @@
             animation: spin 0.8s linear infinite;
             display: inline-block;
         }
-
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* APP PRINCIPAL (inicialmente escondido) */
         .app-container {
             display: none;
             max-width: 600px;
@@ -112,13 +98,9 @@
             position: relative;
             box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
-
-        /* padding e layout */
         .main-content {
             padding: 20px 20px 90px 20px;
         }
-
-        /* Card padrão */
         .card {
             background: rgba(30, 30, 40, 0.7);
             backdrop-filter: blur(12px);
@@ -127,15 +109,7 @@
             margin-bottom: 24px;
             box-shadow: 0 12px 28px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
         }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 32px rgba(0,0,0,0.4);
-        }
-
-        /* Saldo principal */
         .saldo-header {
             display: flex;
             justify-content: space-between;
@@ -153,11 +127,8 @@
             color: #A0A0A0;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: color 0.2s;
         }
         .btn-olho:hover { color: #FF7A00; }
-
-        /* resumo 3 colunas */
         .resumo-grid {
             display: flex;
             justify-content: space-between;
@@ -182,19 +153,11 @@
         }
         .verde { color: #00C853; }
         .vermelho { color: #FF3B30; }
-
-        /* gráficos em linha */
-        .graficos-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
+        .laranja { color: #FF7A00; }
         canvas {
             max-height: 220px;
             width: 100%;
         }
-
-        /* lista de transações */
         .transacoes-titulo {
             font-size: 1.2rem;
             margin: 12px 0 16px;
@@ -208,16 +171,11 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            transition: all 0.2s ease;
             animation: fadeSlideUp 0.3s ease;
         }
         @keyframes fadeSlideUp {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        .transacao-item:hover {
-            transform: scale(1.01);
-            background: #262630;
         }
         .transacao-icon {
             width: 48px;
@@ -239,6 +197,10 @@
             font-size: 0.7rem;
             color: #A0A0A0;
         }
+        .transacao-categoria {
+            font-size: 0.75rem;
+            color: #FFB347;
+        }
         .transacao-valor {
             font-weight: 700;
             font-size: 1.1rem;
@@ -253,12 +215,15 @@
             color: #A0A0A0;
             font-size: 1.2rem;
             cursor: pointer;
-            transition: color 0.2s;
         }
         .btn-acao:hover { color: #FF7A00; }
         .btn-excluir:hover { color: #FF3B30; }
-
-        /* FAB */
+        .empty-state {
+            text-align: center;
+            color: #A0A0A0;
+            padding: 32px;
+            font-style: italic;
+        }
         .fab {
             position: fixed;
             bottom: 80px;
@@ -272,13 +237,11 @@
             justify-content: center;
             box-shadow: 0 6px 16px rgba(255, 122, 0, 0.5);
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
             z-index: 300;
         }
         .fab:active { transform: scale(0.92); }
         .fab i { font-size: 1.8rem; color: #0B0B0B; }
-
-        /* MENU INFERIOR */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -290,7 +253,7 @@
             backdrop-filter: blur(20px);
             display: flex;
             justify-content: space-around;
-            padding: 12px 16px 24px;
+            padding: 12px 10px 24px;
             border-top: 1px solid rgba(255,255,255,0.08);
             border-radius: 28px 28px 0 0;
             z-index: 400;
@@ -303,25 +266,23 @@
             background: none;
             border: none;
             color: #A0A0A0;
-            font-size: 0.7rem;
-            transition: color 0.2s;
+            font-size: 0.65rem;
             cursor: pointer;
+            transition: color 0.2s;
+            padding: 0 4px;
         }
-        .nav-item i { font-size: 1.4rem; }
+        .nav-item i { font-size: 1.3rem; }
         .nav-item.active { color: #FF7A00; font-weight: 500; }
         .nav-item.central-mais {
             background: #FF7A00;
             color: #0B0B0B;
-            width: 52px;
-            height: 52px;
+            width: 48px;
+            height: 48px;
             border-radius: 40px;
             justify-content: center;
             margin-top: -18px;
             box-shadow: 0 4px 12px rgba(255,122,0,0.4);
         }
-        .nav-item.central-mais i { font-size: 1.6rem; }
-
-        /* Modal */
         .modal {
             position: fixed;
             top: 0;
@@ -349,11 +310,13 @@
             border-radius: 48px;
             padding: 28px;
             animation: fadeZoom 0.2s ease;
+            max-height: 85vh;
+            overflow-y: auto;
         }
         .modal-card input, .modal-card select {
             width: 100%;
             padding: 14px;
-            margin: 12px 0;
+            margin: 8px 0;
             background: #2C2C38;
             border: none;
             border-radius: 28px;
@@ -369,32 +332,62 @@
             font-weight: bold;
             margin-top: 12px;
             cursor: pointer;
+            font-family: 'Inter', sans-serif;
         }
-
-        /* telas secundárias */
-        .screen {
-            display: block;
+        .btn-modal.cancel {
+            background: #2C2C38;
+            margin-top: 8px;
         }
-        .screen.hidden {
-            display: none;
+        .screen { display: block; }
+        .screen.hidden { display: none; }
+        .tag {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
         }
-
-        /* config */
-        .config-item {
+        .tag-limite { background: rgba(255,122,0,0.2); color: #FF7A00; }
+        .tag-economia { background: rgba(0,200,83,0.2); color: #00C853; }
+        .item-mercado {
             display: flex;
-            justify-content: space-between;
-            margin: 20px 0;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #2A2A35;
         }
-        .toggle-switch {
-            width: 44px;
-            background: #333;
-            border-radius: 30px;
-            padding: 4px;
-            cursor: pointer;
+        .item-mercado input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #FF7A00;
         }
-        hr {
-            border-color: #2a2a2a;
-            margin: 16px 0;
+        .item-mercado input[type="number"] {
+            width: 70px;
+            padding: 8px;
+            background: #2C2C38;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            text-align: right;
+        }
+        .categoria-mercado-titulo {
+            font-size: 0.85rem;
+            color: #FFB347;
+            font-weight: 600;
+            margin: 16px 0 8px;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #2C2C38;
+            border-radius: 10px;
+            margin: 8px 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #FF7A00, #FFB347);
+            transition: width 0.4s;
         }
         @media (max-width: 480px) {
             .saldo-valor { font-size: 2rem; }
@@ -403,25 +396,17 @@
     </style>
 </head>
 <body>
-
-<!-- SPLASH -->
 <div class="splash" id="splashScreen">
     <div class="splash-content">
         <h1>wellingtonxp</h1>
         <p>Seu controle financeiro inteligente</p>
-        <button class="btn-entrar" id="btnEntrar">
-            <span>Entrar</span>
-            <i class="fas fa-arrow-right"></i>
-        </button>
+        <button class="btn-entrar" id="btnEntrar"><span>Entrar</span> <i class="fas fa-arrow-right"></i></button>
     </div>
 </div>
-
-<!-- APP PRINCIPAL -->
 <div class="app-container" id="appPrincipal">
     <div class="main-content">
-        <!-- telas dinamicas: inicio, relatorios, cartoes, config -->
+        <!-- TELA INÍCIO -->
         <div id="screenInicio" class="screen">
-            <!-- CARD SALDO -->
             <div class="card">
                 <div class="saldo-header">
                     <span style="font-weight:500;">Saldo disponível</span>
@@ -430,8 +415,6 @@
                 <div class="saldo-valor" id="saldoDisplay">R$ 0,00</div>
                 <div style="font-size:0.75rem; color:#A0A0A0;">Saldo atualizado em tempo real</div>
             </div>
-
-            <!-- RESUMO MENSAL -->
             <div class="card">
                 <div style="margin-bottom: 12px;">📊 Resumo do mês</div>
                 <div class="resumo-grid">
@@ -440,21 +423,42 @@
                     <div class="resumo-item"><div class="resumo-label">Saldo mês</div><div class="resumo-num" id="saldoMes">R$0</div></div>
                 </div>
             </div>
-
-            <!-- GRÁFICOS -->
             <div class="card">
                 <div class="graficos-wrapper">
                     <div><span style="font-weight:500;">📈 Evolução do saldo</span><canvas id="lineChart" width="400" height="180"></canvas></div>
                     <div><span style="font-weight:500;">🥧 Gastos por categoria</span><canvas id="pieChart" width="400" height="180"></canvas></div>
                 </div>
             </div>
-
-            <!-- TRANSAÇÕES -->
             <div class="transacoes-titulo"><i class="fas fa-list-ul"></i> Últimas movimentações</div>
             <div id="transacoesLista"></div>
         </div>
-
-        <!-- TELA RELATÓRIOS (gráficos expandidos + insights) -->
+        <!-- TELA MERCADO -->
+        <div id="screenMercado" class="screen hidden">
+            <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <h3><i class="fas fa-shopping-cart"></i> Compra do mês</h3>
+                    <button class="btn-acao" id="btnLimiteMercado" style="font-size:0.85rem;"><i class="fas fa-sliders-h"></i> Limite</button>
+                </div>
+                <div style="margin: 12px 0;">
+                    <span>Orçamento máximo: <strong class="laranja" id="limiteMercadoValor">R$ 1.200,00</strong></span>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressoMercado" style="width:0%;"></div></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
+                        <span>Total estipulado: <strong id="totalEstipuladoMercado">R$0,00</strong></span>
+                        <span>Total pago: <strong id="totalPagoMercado">R$0,00</strong></span>
+                    </div>
+                </div>
+                <div style="font-size:0.85rem; margin-top: 8px;">
+                    <span>💾 Economia: <strong class="verde" id="economiaMercado">R$0,00</strong></span>
+                </div>
+            </div>
+            <div id="listaMercadoContainer"></div>
+            <button class="btn-modal" id="btnFinalizarCompra" style="margin-top:16px;"><i class="fas fa-check-circle"></i> Finalizar compra e lançar despesa</button>
+            <div class="card" style="margin-top:20px;">
+                <h4 style="margin-bottom:12px;">📋 Histórico de compras</h4>
+                <div id="historicoMercado"></div>
+            </div>
+        </div>
+        <!-- TELA RELATÓRIOS -->
         <div id="screenRelatorios" class="screen hidden">
             <div class="card">
                 <h3 style="margin-bottom: 16px;">Relatórios financeiros</h3>
@@ -463,7 +467,6 @@
                 <div class="config-item" style="margin-top:20px;"><span>Média de gastos diários</span><strong id="mediaGastos">R$0</strong></div>
             </div>
         </div>
-
         <!-- TELA CARTÕES -->
         <div id="screenCartoes" class="screen hidden">
             <div class="card">
@@ -477,323 +480,476 @@
                 <p style="margin-top: 20px; color:#A0A0A0;">Limite disponível: <strong class="verde">R$ 12.500,00</strong></p>
             </div>
         </div>
-
-        <!-- TELA CONFIGURAÇÕES -->
+        <!-- TELA CONFIG -->
         <div id="screenConfig" class="screen hidden">
             <div class="card">
                 <h3>⚙️ Configurações</h3>
                 <div class="config-item"><span>Mostrar sempre saldo</span><div class="toggle-switch" id="toggleConfigSaldo"><i class="fas fa-eye"></i></div></div>
                 <hr>
-                <div class="config-item"><span>Carregar dados via CSV</span><input type="file" id="csvUpload" accept=".csv" style="background:#2C2C38; border-radius: 30px; padding: 6px;"></div>
+                <div class="config-item"><span>Carregar dados via CSV</span><input type="file" id="csvUpload" accept=".csv" style="background:#2C2C38; border-radius: 30px; padding: 6px; max-width: 180px;"></div>
                 <button id="resetMockBtn" class="btn-modal" style="background:#333;">Restaurar dados mock</button>
-                <p style="font-size:0.7rem; margin-top:16px;">Formato CSV: Data,Tipo,Categoria,Valor,Descrição<br>Ex: 2025-03-01,receita,Salário,5000.00,Pagamento</p>
+                <p style="font-size:0.7rem; margin-top:16px;">CSV: Data,Tipo,Categoria,Valor,Descrição</p>
             </div>
         </div>
     </div>
-
-    <!-- FAB -->
     <div class="fab" id="fabAdd"><i class="fas fa-plus"></i></div>
-
-    <!-- BOTTOM NAV -->
     <div class="bottom-nav">
         <button class="nav-item active" data-nav="inicio"><i class="fas fa-home"></i><span>Início</span></button>
-        <button class="nav-item" data-nav="relatorios"><i class="fas fa-chart-line"></i><span>Relatórios</span></button>
+        <button class="nav-item" data-nav="mercado"><i class="fas fa-shopping-cart"></i><span>Mercado</span></button>
         <button class="nav-item central-mais" id="navCentralMais"><i class="fas fa-plus"></i></button>
-        <button class="nav-item" data-nav="cartoes"><i class="fas fa-credit-card"></i><span>Cartões</span></button>
+        <button class="nav-item" data-nav="relatorios"><i class="fas fa-chart-line"></i><span>Relatórios</span></button>
         <button class="nav-item" data-nav="config"><i class="fas fa-sliders-h"></i><span>Config</span></button>
     </div>
 </div>
-
-<!-- MODAL ADICIONAR/EDITAR -->
+<!-- MODAL TRANSAÇÃO -->
 <div id="modalTransacao" class="modal">
     <div class="modal-card">
         <h3 id="modalTitle">Nova transação</h3>
-        <input type="text" id="modalDesc" placeholder="Descrição (ex: Uber)" autocomplete="off">
-        <select id="modalTipo">
-            <option value="receita">Receita (+) </option>
-            <option value="despesa">Despesa (-) </option>
-        </select>
-        <input type="text" id="modalCategoria" placeholder="Categoria (ex: Transporte, Alimentação)">
-        <input type="number" id="modalValor" placeholder="Valor (R$)" step="0.01">
+        <input type="text" id="modalDesc" placeholder="Descrição" maxlength="60">
+        <select id="modalTipo"><option value="receita">Receita (+)</option><option value="despesa">Despesa (-)</option></select>
+        <select id="modalCategoriaPai"><option value="">Categoria principal</option></select>
+        <input type="text" id="modalCategoria" placeholder="Subcategoria" list="subcategoriaList" maxlength="40">
+        <datalist id="subcategoriaList"></datalist>
+        <input type="number" id="modalValor" placeholder="Valor (R$)" step="0.01" min="0.01">
         <input type="date" id="modalData">
         <button class="btn-modal" id="salvarTransacaoBtn">Salvar</button>
-        <button class="btn-modal" id="fecharModalBtn" style="background:#2C2C38; margin-top:8px;">Cancelar</button>
+        <button class="btn-modal cancel" id="fecharModalBtn">Cancelar</button>
     </div>
 </div>
-
+<!-- MODAL LIMITE MERCADO -->
+<div id="modalLimiteMercado" class="modal">
+    <div class="modal-card">
+        <h3>Definir limite do mês</h3>
+        <input type="number" id="inputLimiteMercado" placeholder="Limite máximo (R$)" step="0.01" min="1">
+        <button class="btn-modal" id="salvarLimiteMercadoBtn">Salvar limite</button>
+        <button class="btn-modal cancel" id="fecharLimiteMercadoBtn">Cancelar</button>
+    </div>
+</div>
 <script>
-    // ---------- DADOS MOCK + PERSISTÊNCIA ----------
+(function() {
+    // ---------- CATEGORIAS ----------
+    const CATEGORIAS = {
+        "Renda": ["Salário","Freelancer","Investimentos","Poupança","Doações recebidas","Outras receitas"],
+        "Moradia": ["Aluguel ou financiamento","Condomínio","IPTU","Energia elétrica","Água","Gás de cozinha","Internet residencial","TV/streaming","Manutenção da casa","Móveis e decoração"],
+        "Alimentação": ["Supermercado","Feira/hortifruti","Padaria","Restaurantes","Delivery","Lanches","Café","Água mineral","Suplementos","Alimentação no trabalho"],
+        "Transporte": ["Combustível","Transporte público","Uber/99/táxi","Manutenção carro","Seguro veicular","IPVA","Licenciamento","Estacionamento","Pedágios","Parcelas veículo"],
+        "Saúde": ["Plano de saúde","Consultas","Medicamentos","Exames","Academia","Psicólogo","Dentista","Seguro de vida","Óculos/lentes","Emergências médicas"],
+        "Educação": ["Mensalidade","Cursos livres","Livros","Material escolar","Transporte escolar","Assinaturas educacionais","Concursos","Certificações","Idiomas","Eventos acadêmicos"],
+        "Comunicação e Tecnologia": ["Plano celular","Compra celular","Notebook","Manutenção eletrônica","Apps pagos","Nuvem","Softwares","Jogos","Acessórios","Segurança digital"],
+        "Vestuário e Cuidados Pessoais": ["Roupas","Calçados","Acessórios","Cosméticos","Perfumes","Cabeleireiro","Produtos higiene","Lavanderia","Maquiagem","Cuidados estéticos"],
+        "Lazer e Entretenimento": ["Cinema","Viagens","Hotéis","Shows","Festas","Streaming","Hobbies","Passeios","Presentes","Clubes"],
+        "Família e Dependentes": ["Fraldas","Escola filhos","Babá","Mesada","Pets","Presentes familiares","Plano saúde familiar","Cuidados idosos","Transporte familiar","Emergências familiares"],
+        "Financeiros e Outros": ["Impostos","Empréstimos","Cartão crédito","Juros","Seguro residencial","Doações","Taxas bancárias","Reserva emergência","Tarifas","Outros"]
+    };
+    // Categorias do mercado
+    const MERCADO_ITENS = {
+        "Alimentos básicos": ["Arroz","Feijão","Macarrão","Açúcar","Sal","Farinha de trigo","Farinha de mandioca","Óleo de cozinha","Azeite","Café","Leite","Manteiga","Margarina","Pão","Biscoitos","Cereais","Ovos","Queijo","Presunto","Molho de tomate"],
+        "Carnes e proteínas": ["Frango","Carne bovina","Peixe","Linguiça","Salsicha","Atum enlatado","Sardinha","Hambúrguer","Nuggets","Iogurte"],
+        "Hortifruti": ["Batata","Cebola","Alho","Tomate","Cenoura","Alface","Repolho","Banana","Maçã","Laranja","Mamão","Limão","Abacaxi","Uva","Pimentão"],
+        "Bebidas": ["Suco","Refrigerante","Água mineral","Chá","Achocolatado"],
+        "Higiene pessoal": ["Sabonete","Creme dental","Escova de dentes","Fio Dental","Enxaguante Bucal","Shampoo","Condicionador","Desodorante","Papel higiênico","Absorventes"],
+        "Limpeza doméstica": ["Sabão em Pó","Amaciante","Detergente","Multiuso","Lustra Móvel","Desinfetante","Água sanitária","Esponja","Sacos de lixo","Pano de chão","Vassoura","Rodo","Papel toalha","Limpador de vidro","Desengordurante"],
+        "Congelados e práticos": ["Pizza congelada","Lasanha congelada","Legumes congelados","Sorvete","Pão de queijo"],
+        "Temperos e complementos": ["Ketchup","Maionese","Mostarda","Vinagre","Pimenta-do-reino","Caldo de carne","Orégano","Cominho","Canela","Fermento"],
+        "Diversos": ["Ração para pets","Pilhas","Velas","Fósforos","Guardanapos","Papel alumínio","Filme plástico","Sacolas reutilizáveis","Toalhas umedecidas","Sabão em barra"]
+    };
+    const CATEGORIA_EMOJI = {
+        "Renda":"💰","Moradia":"🏠","Alimentação":"🍔","Transporte":"🚗","Saúde":"💊","Educação":"📚",
+        "Comunicação e Tecnologia":"📱","Vestuário e Cuidados Pessoais":"👕","Lazer e Entretenimento":"🎬",
+        "Família e Dependentes":"👪","Financeiros e Outros":"💸","Supermercado":"🛒"
+    };
+
+    // ---------- ESTADO ----------
     let transacoes = [];
     let editingId = null;
     let saldoVisivel = true;
+    let lineChart, pieChart, lineFull, pieFull;
+    // Estado do mercado
+    let compraAtual = []; // { nome, categoria, estipulado, pago, marcado }
+    let limiteMercado = 1200;
+    let historicoCompras = []; // [{ mes, ano, limite, itens: [...], totalEstipulado, totalPago, economia, data }]
 
-    // dados mock iniciais
-    const mockTransacoes = [
-        { id: 1, data: "2025-03-01", tipo: "receita", categoria: "Salário", valor: 5200.00, descricao: "Salário março" },
-        { id: 2, data: "2025-03-05", tipo: "despesa", categoria: "Alimentação", valor: 320.50, descricao: "Mercado" },
-        { id: 3, data: "2025-03-08", tipo: "despesa", categoria: "Transporte", valor: 58.90, descricao: "Uber" },
-        { id: 4, data: "2025-03-12", tipo: "despesa", categoria: "Lazer", valor: 189.90, descricao: "Cinema" },
-        { id: 5, data: "2025-03-15", tipo: "receita", categoria: "Freelancer", valor: 850.00, descricao: "Projeto Web" },
-        { id: 6, data: "2025-03-18", tipo: "despesa", categoria: "Saúde", valor: 145.00, descricao: "Farmácia" },
-        { id: 7, data: "2025-03-20", tipo: "despesa", categoria: "Alimentação", valor: 210.30, descricao: "Restaurante" },
-        { id: 8, data: "2025-02-25", tipo: "despesa", categoria: "Assinatura", valor: 49.90, descricao: "Streaming" },
-    ];
-    
-    function loadMock() {
-        transacoes = JSON.parse(JSON.stringify(mockTransacoes));
+    function salvarLocal() {
+        localStorage.setItem("wellingtonxp_transacoes", JSON.stringify(transacoes));
+        localStorage.setItem("wellingtonxp_compraAtual", JSON.stringify(compraAtual));
+        localStorage.setItem("wellingtonxp_limiteMercado", limiteMercado);
+        localStorage.setItem("wellingtonxp_historicoCompras", JSON.stringify(historicoCompras));
+    }
+
+    function carregarLocal() {
+        try { transacoes = JSON.parse(localStorage.getItem("wellingtonxp_transacoes")) || []; } catch(e) { transacoes = []; }
+        try { compraAtual = JSON.parse(localStorage.getItem("wellingtonxp_compraAtual")) || []; } catch(e) { compraAtual = []; }
+        try { historicoCompras = JSON.parse(localStorage.getItem("wellingtonxp_historicoCompras")) || []; } catch(e) { historicoCompras = []; }
+        limiteMercado = parseFloat(localStorage.getItem("wellingtonxp_limiteMercado")) || 1200;
+        saldoVisivel = localStorage.getItem("wellingtonxp_saldoVisivel") !== "false";
+        if (transacoes.length === 0) {
+            transacoes = [
+                { id:1, data:"2025-03-01", tipo:"receita", categoriaPai:"Renda", categoria:"Salário", valor:5200, descricao:"Salário março" },
+                { id:2, data:"2025-03-05", tipo:"despesa", categoriaPai:"Alimentação", categoria:"Supermercado", valor:320.5, descricao:"Mercado" },
+                { id:3, data:"2025-03-08", tipo:"despesa", categoriaPai:"Transporte", categoria:"Uber/99/táxi", valor:58.9, descricao:"Uber" },
+                { id:4, data:"2025-03-12", tipo:"despesa", categoriaPai:"Lazer e Entretenimento", categoria:"Cinema", valor:189.9, descricao:"Cinema" },
+                { id:5, data:"2025-03-15", tipo:"receita", categoriaPai:"Renda", categoria:"Freelancer", valor:850, descricao:"Projeto Web" },
+                { id:6, data:"2025-03-18", tipo:"despesa", categoriaPai:"Saúde", categoria:"Medicamentos", valor:145, descricao:"Farmácia" },
+                { id:7, data:"2025-03-20", tipo:"despesa", categoriaPai:"Alimentação", categoria:"Restaurantes", valor:210.3, descricao:"Restaurante" },
+                { id:8, data:"2025-02-25", tipo:"despesa", categoriaPai:"Comunicação e Tecnologia", categoria:"Streaming", valor:49.9, descricao:"Streaming" },
+            ];
+        }
+        if (compraAtual.length === 0) inicializarCompraVazia();
         salvarLocal();
         atualizarTudo();
     }
 
-    function salvarLocal() {
-        localStorage.setItem("wellingtonxp_transacoes", JSON.stringify(transacoes));
+    function inicializarCompraVazia() {
+        compraAtual = [];
+        for (let [cat, itens] of Object.entries(MERCADO_ITENS)) {
+            itens.forEach(item => {
+                compraAtual.push({ nome: item, categoria: cat, estipulado: 0, pago: 0, marcado: false });
+            });
+        }
     }
 
-    function carregarLocal() {
-        const local = localStorage.getItem("wellingtonxp_transacoes");
-        if(local) transacoes = JSON.parse(local);
-        else loadMock();
-        atualizarTudo();
-    }
-
-    // helpers cálculos
-    function getSaldoTotal() {
-        return transacoes.reduce((acc, t) => acc + (t.tipo === "receita" ? t.valor : -t.valor), 0);
-    }
+    function getSaldoTotal() { return transacoes.reduce((acc,t)=>acc+(t.tipo==="receita"?t.valor:-t.valor),0); }
     function getResumoMes() {
-        const now = new Date();
-        const ano = now.getFullYear();
-        const mes = now.getMonth();
-        let receitas = 0, despesas = 0;
-        transacoes.forEach(t => {
-            const dt = new Date(t.data);
-            if(dt.getFullYear() === ano && dt.getMonth() === mes) {
-                if(t.tipo === "receita") receitas += t.valor;
-                else despesas += t.valor;
-            }
+        const now = new Date(), ano = now.getFullYear(), mes = now.getMonth();
+        let rec=0, desp=0;
+        transacoes.forEach(t=>{
+            const d=new Date(t.data);
+            if(d.getFullYear()===ano && d.getMonth()===mes) t.tipo==="receita"?rec+=t.valor:desp+=t.valor;
         });
-        return { receitas, despesas, saldo: receitas - despesas };
+        return {receitas:rec, despesas:desp, saldo:rec-desp};
     }
-
-    // agrupar despesas por categoria (pizza)
-    function getDespesasPorCategoria() {
+    function getDespesasPorCategoriaPai() {
         const map = new Map();
-        transacoes.forEach(t => {
-            if(t.tipo === "despesa") {
-                map.set(t.categoria, (map.get(t.categoria) || 0) + t.valor);
-            }
-        });
-        return { labels: Array.from(map.keys()), values: Array.from(map.values()) };
+        transacoes.forEach(t=>{ if(t.tipo==="despesa") map.set(t.categoriaPai||"Outros",(map.get(t.categoriaPai||"Outros")||0)+t.valor); });
+        return {labels:Array.from(map.keys()), values:Array.from(map.values())};
     }
-
-    // evolução do saldo (ordenado por data)
     function getEvolucaoSaldo() {
-        const sorted = [...transacoes].sort((a,b) => new Date(a.data) - new Date(b.data));
-        let running = 0;
-        const pontos = [];
-        const datas = [];
-        sorted.forEach(t => {
-            running += t.tipo === "receita" ? t.valor : -t.valor;
-            pontos.push(running);
-            datas.push(t.data.slice(5));
-        });
-        return { datas, saldos: pontos };
+        const sorted = [...transacoes].sort((a,b)=>new Date(a.data)-new Date(b.data));
+        let run=0; const pts=[], dts=[];
+        sorted.forEach(t=>{ run+=t.tipo==="receita"?t.valor:-t.valor; pts.push(run); dts.push(t.data.slice(5)); });
+        return {datas:dts, saldos:pts};
     }
 
-    // Atualizar UI completa
-    let lineChart, pieChart, lineFull, pieFull;
     function atualizarTudo() {
         const saldo = getSaldoTotal();
-        const saldoElem = document.getElementById("saldoDisplay");
-        if(saldoVisivel) saldoElem.innerText = `R$ ${saldo.toFixed(2).replace('.',',')}`;
-        else saldoElem.innerText = "••••••";
-        const resumo = getResumoMes();
-        document.getElementById("totalReceitas").innerHTML = `R$ ${resumo.receitas.toFixed(2)}`;
-        document.getElementById("totalDespesas").innerHTML = `R$ ${resumo.despesas.toFixed(2)}`;
-        document.getElementById("saldoMes").innerHTML = `R$ ${resumo.saldo.toFixed(2)}`;
+        const el = document.getElementById("saldoDisplay");
+        el.innerText = saldoVisivel ? `R$ ${saldo.toFixed(2).replace('.',',')}` : "••••••";
+        const r = getResumoMes();
+        document.getElementById("totalReceitas").innerHTML = `R$ ${r.receitas.toFixed(2)}`;
+        document.getElementById("totalDespesas").innerHTML = `R$ ${r.despesas.toFixed(2)}`;
+        document.getElementById("saldoMes").innerHTML = `R$ ${r.saldo.toFixed(2)}`;
         renderTransacoes();
         updateCharts();
-        if(document.getElementById("mediaGastos")) {
-            let totalGastosMes = resumo.despesas;
-            let diasMes = new Date(new Date().getFullYear(), new Date().getMonth()+1, 0).getDate();
-            let media = totalGastosMes / diasMes;
-            document.getElementById("mediaGastos").innerHTML = `R$ ${media.toFixed(2)}`;
-        }
+        renderMercado();
         salvarLocal();
     }
 
     function renderTransacoes() {
         const container = document.getElementById("transacoesLista");
-        if(!container) return;
-        const sorted = [...transacoes].sort((a,b)=> new Date(b.data) - new Date(a.data));
-        container.innerHTML = "";
-        sorted.forEach(t => {
+        const sorted = [...transacoes].sort((a,b)=>new Date(b.data)-new Date(a.data));
+        if(sorted.length===0){ container.innerHTML='<div class="empty-state">Nenhuma movimentação ainda.</div>'; return; }
+        container.innerHTML="";
+        sorted.forEach(t=>{
+            const emoji = CATEGORIA_EMOJI[t.categoriaPai]||(t.tipo==="receita"?"💰":"💸");
             const card = document.createElement("div");
-            card.className = "transacao-item";
-            const isReceita = t.tipo === "receita";
-            const emojiMap = { Alimentação:"🍔", Transporte:"🚗", Lazer:"🎬", Saúde:"💊", Salário:"💼", Freelancer:"💻", Assinatura:"🎧" };
-            const icon = emojiMap[t.categoria] || (isReceita ? "💰" : "💸");
-            card.innerHTML = `
-                <div class="transacao-icon">${icon}</div>
-                <div class="transacao-info">
-                    <div class="transacao-nome">${t.descricao}</div>
-                    <div class="transacao-data">${new Date(t.data).toLocaleDateString()}</div>
-                </div>
-                <div class="transacao-valor" style="color: ${isReceita ? '#00C853' : '#FF3B30'}">
-                    ${isReceita ? '+' : '-'} R$ ${t.valor.toFixed(2)}
-                </div>
-                <div class="transacao-acoes">
-                    <button class="btn-acao" data-editar="${t.id}"><i class="fas fa-pen"></i></button>
-                    <button class="btn-acao btn-excluir" data-excluir="${t.id}"><i class="fas fa-trash"></i></button>
-                </div>
-            `;
+            card.className="transacao-item";
+            card.dataset.id=t.id;
+            card.innerHTML=`<div class="transacao-icon">${emoji}</div>
+                <div class="transacao-info"><div class="transacao-nome">${sanitize(t.descricao)}</div>
+                <div class="transacao-data">${new Date(t.data).toLocaleDateString()}</div>
+                <div class="transacao-categoria">${sanitize(t.categoriaPai||'')} → ${sanitize(t.categoria)}</div></div>
+                <div class="transacao-valor" style="color:${t.tipo==='receita'?'#00C853':'#FF3B30'}">${t.tipo==='receita'?'+':'-'} R$ ${t.valor.toFixed(2)}</div>
+                <div class="transacao-acoes"><button class="btn-acao" data-acao="editar" data-id="${t.id}"><i class="fas fa-pen"></i></button>
+                <button class="btn-acao btn-excluir" data-acao="excluir" data-id="${t.id}"><i class="fas fa-trash"></i></button></div>`;
             container.appendChild(card);
-        });
-        document.querySelectorAll("[data-editar]").forEach(btn => {
-            btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.editar); editarTransacao(id); });
-        });
-        document.querySelectorAll("[data-excluir]").forEach(btn => {
-            btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.excluir); excluirTransacao(id); });
         });
     }
 
-    function excluirTransacao(id) {
-        transacoes = transacoes.filter(t => t.id !== id);
-        atualizarTudo();
+    document.getElementById("transacoesLista").addEventListener("click",(e)=>{
+        const btn = e.target.closest("button"); if(!btn) return;
+        const id = parseInt(btn.dataset.id);
+        if(btn.dataset.acao==="editar") editarTransacao(id);
+        else if(btn.dataset.acao==="excluir"){ if(confirm("Excluir?")){ transacoes=transacoes.filter(t=>t.id!==id); atualizarTudo(); } }
+    });
+
+    function editarTransacao(id){
+        const t = transacoes.find(tx=>tx.id===id); if(!t) return;
+        editingId=id;
+        document.getElementById("modalTitle").innerText="Editar transação";
+        document.getElementById("modalDesc").value=t.descricao;
+        document.getElementById("modalTipo").value=t.tipo;
+        document.getElementById("modalCategoriaPai").value=t.categoriaPai||"";
+        document.getElementById("modalCategoria").value=t.categoria||"";
+        document.getElementById("modalValor").value=t.valor;
+        document.getElementById("modalData").value=t.data;
+        atualizarSubcategorias();
+        document.getElementById("modalTransacao").classList.add("active");
     }
-    function editarTransacao(id) {
-        const t = transacoes.find(tx => tx.id === id);
-        if(t){
-            editingId = id;
-            document.getElementById("modalTitle").innerText = "Editar transação";
-            document.getElementById("modalDesc").value = t.descricao;
-            document.getElementById("modalTipo").value = t.tipo;
-            document.getElementById("modalCategoria").value = t.categoria;
-            document.getElementById("modalValor").value = t.valor;
-            document.getElementById("modalData").value = t.data;
-            document.getElementById("modalTransacao").classList.add("active");
-        }
-    }
-    function salvarTransacaoModal() {
+
+    function salvarTransacaoModal(){
         const desc = document.getElementById("modalDesc").value.trim();
         const tipo = document.getElementById("modalTipo").value;
-        const categoria = document.getElementById("modalCategoria").value.trim();
+        const catPai = document.getElementById("modalCategoriaPai").value;
+        let cat = document.getElementById("modalCategoria").value.trim();
         let valor = parseFloat(document.getElementById("modalValor").value);
         const data = document.getElementById("modalData").value;
-        if(!desc || !categoria || isNaN(valor) || !data) { alert("Preencha todos os campos"); return; }
-        if(valor <=0) { alert("Valor deve ser positivo"); return; }
-        if(editingId !== null) {
-            const index = transacoes.findIndex(t => t.id === editingId);
-            if(index !== -1) {
-                transacoes[index] = { ...transacoes[index], descricao: desc, tipo, categoria, valor, data };
-            }
-            editingId = null;
+        if(!desc||!catPai||!cat||isNaN(valor)||!data){ alert("Preencha todos os campos."); return; }
+        if(valor<=0){ alert("Valor positivo."); return; }
+        if(editingId!==null){
+            const i = transacoes.findIndex(t=>t.id===editingId);
+            if(i!==-1) transacoes[i]={...transacoes[i], descricao:desc, tipo, categoriaPai:catPai, categoria:cat, valor, data};
+            editingId=null;
         } else {
-            const newId = Date.now();
-            transacoes.push({ id: newId, data, tipo, categoria, valor, descricao: desc });
+            transacoes.push({id:Date.now()+Math.floor(Math.random()*1000), data, tipo, categoriaPai:catPai, categoria:cat, valor, descricao:desc});
         }
         fecharModal();
         atualizarTudo();
     }
-    function fecharModal() {
+
+    function fecharModal(){
         document.getElementById("modalTransacao").classList.remove("active");
-        editingId = null;
-        document.getElementById("modalTitle").innerText = "Nova transação";
-        document.getElementById("modalDesc").value = "";
-        document.getElementById("modalCategoria").value = "";
-        document.getElementById("modalValor").value = "";
-        document.getElementById("modalData").value = new Date().toISOString().slice(0,10);
+        editingId=null;
+        document.getElementById("modalTitle").innerText="Nova transação";
+        document.getElementById("modalDesc").value="";
+        document.getElementById("modalCategoriaPai").value="";
+        document.getElementById("modalCategoria").value="";
+        document.getElementById("modalValor").value="";
+        document.getElementById("modalData").value=new Date().toISOString().slice(0,10);
     }
 
-    // Gráficos
-    function updateCharts() {
+    function updateCharts(){
         const evol = getEvolucaoSaldo();
-        const cat = getDespesasPorCategoria();
-        if(lineChart){ lineChart.destroy(); } if(pieChart){ pieChart.destroy(); }
-        const ctxLine = document.getElementById("lineChart").getContext("2d");
-        lineChart = new Chart(ctxLine, { type: 'line', data: { labels: evol.datas, datasets: [{ label: 'Saldo acumulado', data: evol.saldos, borderColor: '#FF7A00', backgroundColor: 'transparent', tension: 0.2, fill: false }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#fff' } } } } });
-        const ctxPie = document.getElementById("pieChart").getContext("2d");
-        pieChart = new Chart(ctxPie, { type: 'pie', data: { labels: cat.labels, datasets: [{ data: cat.values, backgroundColor: ['#FF7A00','#00C853','#FF3B30','#FFB347','#7B2CBF','#4A9EFF'] }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#fff' } } } } });
-        if(lineFull){ lineFull.destroy(); } if(pieFull){ pieFull.destroy(); }
-        const ctxLineF = document.getElementById("lineChartFull")?.getContext("2d");
-        if(ctxLineF) lineFull = new Chart(ctxLineF, { type: 'line', data: { labels: evol.datas, datasets: [{ label: 'Evolução', data: evol.saldos, borderColor: '#FF7A00' }] }, options: { responsive: true } });
-        const ctxPieF = document.getElementById("pieChartFull")?.getContext("2d");
-        if(ctxPieF) pieFull = new Chart(ctxPieF, { type: 'pie', data: { labels: cat.labels, datasets: [{ data: cat.values, backgroundColor: ['#FF7A00','#00C853','#FF3B30','#FFB347'] }] } });
+        const despesasCat = getDespesasPorCategoriaPai();
+        const cores = ['#FF7A00','#FF3B30','#FFB347','#00C853','#7B2CBF','#4A9EFF','#FF69B4','#8B4513'];
+        if(lineChart){ lineChart.data.labels=evol.datas; lineChart.data.datasets[0].data=evol.saldos; lineChart.update(); }
+        else { lineChart=new Chart(document.getElementById("lineChart").getContext("2d"),{type:'line',data:{labels:evol.datas,datasets:[{label:'Saldo',data:evol.saldos,borderColor:'#FF7A00',tension:0.2,fill:false}]},options:{responsive:true,plugins:{legend:{labels:{color:'#fff'}}}}}); }
+        if(pieChart){ pieChart.data.labels=despesasCat.labels; pieChart.data.datasets[0].data=despesasCat.values; pieChart.update(); }
+        else { pieChart=new Chart(document.getElementById("pieChart").getContext("2d"),{type:'pie',data:{labels:despesasCat.labels,datasets:[{data:despesasCat.values,backgroundColor:cores.slice(0,despesasCat.labels.length)}]},options:{responsive:true,plugins:{legend:{labels:{color:'#fff'}}}}}); }
+        // Full charts
+        if(document.getElementById("screenRelatorios").classList.contains("hidden")) return;
+        if(lineFull){ lineFull.data.labels=evol.datas; lineFull.data.datasets[0].data=evol.saldos; lineFull.update(); }
+        else { const ctx=document.getElementById("lineChartFull")?.getContext("2d"); if(ctx) lineFull=new Chart(ctx,{type:'line',data:{labels:evol.datas,datasets:[{label:'Evolução',data:evol.saldos,borderColor:'#FF7A00'}]},options:{responsive:true}}); }
+        if(pieFull){ pieFull.data.labels=despesasCat.labels; pieFull.data.datasets[0].data=despesasCat.values; pieFull.update(); }
+        else { const ctx=document.getElementById("pieChartFull")?.getContext("2d"); if(ctx) pieFull=new Chart(ctx,{type:'pie',data:{labels:despesasCat.labels,datasets:[{data:despesasCat.values,backgroundColor:cores.slice(0,despesasCat.labels.length)}]},options:{responsive:true}}); }
     }
 
-    // Navegação entre telas
+    // ---------- MERCADO ----------
+    function renderMercado() {
+        const container = document.getElementById("listaMercadoContainer");
+        document.getElementById("limiteMercadoValor").innerText = `R$ ${limiteMercado.toFixed(2).replace('.',',')}`;
+        document.getElementById("inputLimiteMercado").value = limiteMercado;
+        let totalEstipulado = 0, totalPago = 0;
+        compraAtual.forEach(item => { if(item.marcado) { totalEstipulado += item.estipulado||0; totalPago += item.pago||0; } });
+        const economia = totalEstipulado - totalPago;
+        const percLimite = limiteMercado > 0 ? Math.min(100, (totalPago / limiteMercado) * 100) : 0;
+        document.getElementById("progressoMercado").style.width = percLimite + "%";
+        document.getElementById("progressoMercado").style.background = percLimite > 90 ? "linear-gradient(90deg, #FF3B30, #FF7A00)" : "linear-gradient(90deg, #FF7A00, #FFB347)";
+        document.getElementById("totalEstipuladoMercado").innerText = `R$ ${totalEstipulado.toFixed(2)}`;
+        document.getElementById("totalPagoMercado").innerText = `R$ ${totalPago.toFixed(2)}`;
+        document.getElementById("economiaMercado").innerText = `R$ ${economia.toFixed(2)}`;
+        // Agrupar itens por categoria
+        let html = '';
+        let ultimaCat = '';
+        for (let [cat, itens] of Object.entries(MERCADO_ITENS)) {
+            html += `<div class="categoria-mercado-titulo">${cat}</div>`;
+            itens.forEach(nome => {
+                const item = compraAtual.find(i => i.nome === nome && i.categoria === cat) || { nome, categoria: cat, estipulado: 0, pago: 0, marcado: false };
+                html += `<div class="item-mercado">
+                    <input type="checkbox" data-nome="${nome}" data-cat="${cat}" ${item.marcado?'checked':''} onchange="toggleItemMercado(this)">
+                    <span style="flex:1;font-size:0.85rem;">${nome}</span>
+                    <input type="number" placeholder="Est." value="${item.estipulado||''}" data-nome="${nome}" data-cat="${cat}" data-tipo="estipulado" onchange="updateItemMercado(this)" step="0.01" min="0" style="width:65px;">
+                    <input type="number" placeholder="Pago" value="${item.pago||''}" data-nome="${nome}" data-cat="${cat}" data-tipo="pago" onchange="updateItemMercado(this)" step="0.01" min="0" style="width:65px;">
+                    <span style="font-size:0.7rem;width:55px;text-align:right;color:${(item.estipulado||0)>(item.pago||0)?'#00C853':'#FF3B30'}">${item.estipulado&&item.pago? ((item.estipulado-item.pago)>=0?'↓':'↑')+' R$'+Math.abs(item.estipulado-item.pago).toFixed(2):''}</span>
+                </div>`;
+            });
+        }
+        container.innerHTML = html;
+        // Histórico
+        const histContainer = document.getElementById("historicoMercado");
+        if (historicoCompras.length === 0) {
+            histContainer.innerHTML = '<div class="empty-state">Nenhuma compra finalizada ainda.</div>';
+        } else {
+            histContainer.innerHTML = historicoCompras.slice().reverse().slice(0,5).map(h => `
+                <div style="background:#2C2C38;border-radius:16px;padding:12px;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;"><strong>${h.mes}/${h.ano}</strong><span>Limite: R$${h.limite.toFixed(2)}</span></div>
+                    <div style="font-size:0.8rem;">Estipulado: R$${h.totalEstipulado.toFixed(2)} | Pago: R$${h.totalPago.toFixed(2)}</div>
+                    <div style="color:#00C853;font-size:0.8rem;">Economia: R$${h.economia.toFixed(2)}</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    window.toggleItemMercado = function(cb) {
+        const item = compraAtual.find(i => i.nome === cb.dataset.nome && i.categoria === cb.dataset.cat);
+        if (item) item.marcado = cb.checked;
+        else compraAtual.push({ nome: cb.dataset.nome, categoria: cb.dataset.cat, estipulado: 0, pago: 0, marcado: true });
+        renderMercado();
+        salvarLocal();
+    };
+
+    window.updateItemMercado = function(input) {
+        let item = compraAtual.find(i => i.nome === input.dataset.nome && i.categoria === input.dataset.cat);
+        if (!item) {
+            item = { nome: input.dataset.nome, categoria: input.dataset.cat, estipulado: 0, pago: 0, marcado: true };
+            compraAtual.push(item);
+        }
+        const val = parseFloat(input.value) || 0;
+        if (input.dataset.tipo === 'estipulado') item.estipulado = val;
+        else item.pago = val;
+        item.marcado = true; // força marcado ao editar valor
+        renderMercado();
+        salvarLocal();
+    };
+
+    function finalizarCompra() {
+        const itensMarcados = compraAtual.filter(i => i.marcado && i.pago > 0);
+        if (itensMarcados.length === 0) { alert("Marque pelo menos um item com preço pago."); return; }
+        const totalPago = itensMarcados.reduce((s,i) => s + (i.pago||0), 0);
+        const totalEstipulado = itensMarcados.reduce((s,i) => s + (i.estipulado||0), 0);
+        const economia = totalEstipulado - totalPago;
+        const now = new Date();
+        const desc = `Supermercado ${now.toLocaleDateString()}`;
+        const novaId = Date.now() + Math.floor(Math.random()*1000);
+        transacoes.push({
+            id: novaId,
+            data: now.toISOString().slice(0,10),
+            tipo: "despesa",
+            categoriaPai: "Alimentação",
+            categoria: "Supermercado",
+            valor: totalPago,
+            descricao: desc
+        });
+        // Salvar no histórico
+        historicoCompras.push({
+            mes: now.getMonth()+1,
+            ano: now.getFullYear(),
+            limite: limiteMercado,
+            itens: JSON.parse(JSON.stringify(itensMarcados)),
+            totalEstipulado,
+            totalPago,
+            economia,
+            data: now.toISOString()
+        });
+        // Resetar compra atual
+        inicializarCompraVazia();
+        salvarLocal();
+        atualizarTudo();
+        alert(`Compra finalizada! Total pago: R$${totalPago.toFixed(2)}\nEconomia: R$${economia.toFixed(2)}`);
+    }
+
+    // ---------- NAVEGAÇÃO ----------
     function showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-        document.getElementById(`screen${screenId.charAt(0).toUpperCase()+screenId.slice(1)}`).classList.remove('hidden');
-        document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-        if(screenId === 'inicio') document.querySelector('[data-nav="inicio"]').classList.add('active');
-        else if(screenId === 'relatorios') document.querySelector('[data-nav="relatorios"]').classList.add('active');
-        else if(screenId === 'cartoes') document.querySelector('[data-nav="cartoes"]').classList.add('active');
-        else if(screenId === 'config') document.querySelector('[data-nav="config"]').classList.add('active');
-        if(screenId === 'relatorios') updateCharts();
+        const target = document.getElementById(`screen${screenId.charAt(0).toUpperCase() + screenId.slice(1)}`);
+        if (target) target.classList.remove('hidden');
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        const mapNav = { inicio: "inicio", mercado: "mercado", relatorios: "relatorios", cartoes: "cartoes", config: "config" };
+        const navId = mapNav[screenId];
+        if (navId) document.querySelector(`[data-nav="${navId}"]`).classList.add('active');
+        if (screenId === 'mercado') renderMercado();
+        if (screenId === 'relatorios') updateCharts();
     }
 
-    // integração CSV
-    document.getElementById("csvUpload")?.addEventListener("change", function(e) {
-        const file = e.target.files[0];
-        if(!file) return;
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-            const text = ev.target.result;
-            const lines = text.split("\n").slice(1);
-            const novas = [];
-            lines.forEach(line => {
-                const cols = line.split(",");
-                if(cols.length >=5) {
-                    const [data, tipo, categoria, valorStr, descricao] = cols;
-                    const valor = parseFloat(valorStr);
-                    if(!isNaN(valor) && data) {
-                        novas.push({ id: Date.now()+Math.random(), data: data.trim(), tipo: tipo.trim().toLowerCase(), categoria: categoria.trim(), valor, descricao: descricao.trim() });
-                    }
-                }
-            });
-            if(novas.length) transacoes.push(...novas);
+    function preencherSelectCategoriaPai() {
+        const sel = document.getElementById("modalCategoriaPai");
+        sel.innerHTML = '<option value="">Categoria principal</option>';
+        Object.keys(CATEGORIAS).forEach(c => { const o = document.createElement("option"); o.value=c; o.textContent=c; sel.appendChild(o); });
+        sel.addEventListener("change", atualizarSubcategorias);
+    }
+
+    function atualizarSubcategorias() {
+        const catPai = document.getElementById("modalCategoriaPai").value;
+        const dl = document.getElementById("subcategoriaList");
+        dl.innerHTML = "";
+        if (catPai && CATEGORIAS[catPai]) CATEGORIAS[catPai].forEach(s => { const o = document.createElement("option"); o.value=s; dl.appendChild(o); });
+    }
+
+    function sanitize(s) { const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+
+    // ---------- INIT ----------
+    function init() {
+        preencherSelectCategoriaPai();
+        document.getElementById("toggleSaldoBtn").addEventListener("click",()=>{
+            saldoVisivel=!saldoVisivel; localStorage.setItem("wellingtonxp_saldoVisivel",saldoVisivel);
             atualizarTudo();
-            alert(`${novas.length} transações importadas!`);
-        };
-        reader.readAsText(file);
-    });
-
-    document.getElementById("resetMockBtn")?.addEventListener("click", () => { loadMock(); atualizarTudo(); });
-    document.getElementById("toggleSaldoBtn")?.addEventListener("click", () => { saldoVisivel = !saldoVisivel; atualizarTudo(); });
-    document.getElementById("fabAdd")?.addEventListener("click", () => { editingId=null; document.getElementById("modalTitle").innerText="Nova transação"; document.getElementById("modalTransacao").classList.add("active"); });
-    document.getElementById("navCentralMais")?.addEventListener("click", () => { editingId=null; document.getElementById("modalTitle").innerText="Nova transação"; document.getElementById("modalTransacao").classList.add("active"); });
-    document.getElementById("salvarTransacaoBtn")?.addEventListener("click", salvarTransacaoModal);
-    document.getElementById("fecharModalBtn")?.addEventListener("click", fecharModal);
-    document.querySelectorAll("[data-nav]").forEach(btn => { btn.addEventListener("click", (e) => { const nav = btn.dataset.nav; if(nav) showScreen(nav); }); });
-
-    // SPLASH E INICIALIZAÇÃO
-    document.getElementById("btnEntrar").addEventListener("click", (e) => {
-        const btn = e.currentTarget;
-        btn.innerHTML = '<div class="spinner-load"></div> Carregando...';
-        btn.disabled = true;
-        setTimeout(() => {
-            document.getElementById("splashScreen").style.opacity = "0";
-            setTimeout(() => {
-                document.getElementById("splashScreen").style.display = "none";
-                document.getElementById("appPrincipal").style.display = "block";
-                carregarLocal();
-                // contador animado no saldo (efeito cassino)
-                const finalSaldo = getSaldoTotal();
-                let current = 0;
-                const el = document.getElementById("saldoDisplay");
-                const step = finalSaldo / 50;
-                const interval = setInterval(() => {
-                    current += step;
-                    if(current >= finalSaldo) { current = finalSaldo; clearInterval(interval); }
-                    if(saldoVisivel) el.innerText = `R$ ${current.toFixed(2).replace('.',',')}`;
-                    else el.innerText = "••••••";
-                }, 20);
-            }, 400);
-        }, 1200);
-    });
-    // pré definir data atual no modal
-    document.getElementById("modalData").value = new Date().toISOString().slice(0,10);
+            document.getElementById("toggleSaldoBtn").innerHTML = saldoVisivel?'<i class="far fa-eye"></i>':'<i class="far fa-eye-slash"></i>';
+        });
+        document.getElementById("toggleConfigSaldo").addEventListener("click",()=>document.getElementById("toggleSaldoBtn").click());
+        document.getElementById("resetMockBtn").addEventListener("click",()=>{
+            if(confirm("Restaurar dados mock? Suas transações serão perdidas.")){
+                transacoes=[{id:1,data:"2025-03-01",tipo:"receita",categoriaPai:"Renda",categoria:"Salário",valor:5200,descricao:"Salário março"},{id:2,data:"2025-03-05",tipo:"despesa",categoriaPai:"Alimentação",categoria:"Supermercado",valor:320.5,descricao:"Mercado"},{id:3,data:"2025-03-08",tipo:"despesa",categoriaPai:"Transporte",categoria:"Uber/99/táxi",valor:58.9,descricao:"Uber"},{id:4,data:"2025-03-12",tipo:"despesa",categoriaPai:"Lazer e Entretenimento",categoria:"Cinema",valor:189.9,descricao:"Cinema"},{id:5,data:"2025-03-15",tipo:"receita",categoriaPai:"Renda",categoria:"Freelancer",valor:850,descricao:"Projeto Web"},{id:6,data:"2025-03-18",tipo:"despesa",categoriaPai:"Saúde",categoria:"Medicamentos",valor:145,descricao:"Farmácia"},{id:7,data:"2025-03-20",tipo:"despesa",categoriaPai:"Alimentação",categoria:"Restaurantes",valor:210.3,descricao:"Restaurante"},{id:8,data:"2025-02-25",tipo:"despesa",categoriaPai:"Comunicação e Tecnologia",categoria:"Streaming",valor:49.9,descricao:"Streaming"}];
+                inicializarCompraVazia();
+                historicoCompras=[];
+                limiteMercado=1200;
+                salvarLocal();
+                atualizarTudo();
+            }
+        });
+        document.getElementById("fabAdd").addEventListener("click",()=>{ fecharModal(); document.getElementById("modalTransacao").classList.add("active"); });
+        document.getElementById("navCentralMais").addEventListener("click",()=>{ fecharModal(); document.getElementById("modalTransacao").classList.add("active"); });
+        document.getElementById("salvarTransacaoBtn").addEventListener("click",salvarTransacaoModal);
+        document.getElementById("fecharModalBtn").addEventListener("click",fecharModal);
+        document.getElementById("modalTransacao").addEventListener("click",(e)=>{ if(e.target===document.getElementById("modalTransacao")) fecharModal(); });
+        document.querySelectorAll("[data-nav]").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.nav)));
+        // Mercado
+        document.getElementById("btnLimiteMercado").addEventListener("click",()=>document.getElementById("modalLimiteMercado").classList.add("active"));
+        document.getElementById("salvarLimiteMercadoBtn").addEventListener("click",()=>{
+            const v = parseFloat(document.getElementById("inputLimiteMercado").value);
+            if(v>0){ limiteMercado=v; salvarLocal(); renderMercado(); document.getElementById("modalLimiteMercado").classList.remove("active"); }
+        });
+        document.getElementById("fecharLimiteMercadoBtn").addEventListener("click",()=>document.getElementById("modalLimiteMercado").classList.remove("active"));
+        document.getElementById("btnFinalizarCompra").addEventListener("click",finalizarCompra);
+        // CSV
+        document.getElementById("csvUpload").addEventListener("change",function(e){
+            const f=e.target.files[0]; if(!f) return;
+            const r=new FileReader();
+            r.onload=function(ev){
+                const lines=ev.target.result.split("\n").slice(1);
+                let imp=0;
+                lines.forEach(line=>{
+                    if(!line.trim()) return;
+                    const cols=line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                    if(cols&&cols.length>=5){
+                        let [data,tipo,cat,valStr,desc]=cols.map(c=>c.replace(/(^"|"$)/g,"").trim());
+                        valStr=valStr.replace(",",".");
+                        const valor=parseFloat(valStr);
+                        if(!isNaN(valor)&&data&&tipo){
+                            let catPai="Outros";
+                            for(let [p,subs] of Object.entries(CATEGORIAS)){ if(subs.some(s=>s.toLowerCase()===cat.toLowerCase())){ catPai=p; break; } }
+                            transacoes.push({id:Date.now()+Math.random(),data,tipo:tipo.toLowerCase(),categoriaPai:catPai,categoria:cat,valor,descricao:desc||cat});
+                            imp++;
+                        }
+                    }
+                });
+                if(imp){ atualizarTudo(); alert(`${imp} importadas.`); }
+            };
+            r.readAsText(f);
+        });
+        // Splash
+        const jaVisitou = localStorage.getItem("wellingtonxp_visitou");
+        if(jaVisitou){
+            document.getElementById("splashScreen").style.display="none";
+            document.getElementById("appPrincipal").style.display="block";
+            carregarLocal();
+        } else {
+            document.getElementById("btnEntrar").addEventListener("click",function(e){
+                const btn=e.currentTarget;
+                btn.innerHTML='<div class="spinner-load"></div> Carregando...';
+                btn.disabled=true;
+                setTimeout(()=>{
+                    document.getElementById("splashScreen").style.opacity="0";
+                    setTimeout(()=>{
+                        document.getElementById("splashScreen").style.display="none";
+                        document.getElementById("appPrincipal").style.display="block";
+                        carregarLocal();
+                        localStorage.setItem("wellingtonxp_visitou","true");
+                    },400);
+                },1000);
+            });
+        }
+    }
+    init();
+})();
 </script>
 </body>
 </html>
