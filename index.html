@@ -8,11 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0B0B0B;
@@ -21,377 +17,69 @@
             min-height: 100vh;
         }
         .splash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #1E1E2F, #0B0B0B);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 2000;
-            transition: opacity 0.6s ease, visibility 0.6s;
-            backdrop-filter: blur(2px);
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+            z-index: 2000; transition: opacity 0.6s ease, visibility 0.6s; backdrop-filter: blur(2px);
         }
-        .splash-content {
-            text-align: center;
-            animation: fadeZoom 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
+        .splash-content { text-align: center; animation: fadeZoom 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
         @keyframes fadeZoom {
-            0% { opacity: 0; transform: scale(0.92); }
-            100% { opacity: 1; transform: scale(1); }
+            0% { opacity: 0; transform: scale(0.92); } 100% { opacity: 1; transform: scale(1); }
         }
-        .splash h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #FF7A00, #FFB347);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
-        }
-        .splash p {
-            color: #A0A0A0;
-            margin-top: 12px;
-            font-weight: 400;
-        }
-        .btn-entrar {
-            margin-top: 48px;
-            background: #FF7A00;
-            border: none;
-            padding: 14px 40px;
-            border-radius: 60px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #0B0B0B;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 122, 0, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .btn-entrar:active {
-            transform: scale(0.96);
-            box-shadow: 0 4px 12px rgba(255, 122, 0, 0.5);
-        }
-        .spinner-load {
-            width: 22px;
-            height: 22px;
-            border: 2px solid rgba(0,0,0,0.2);
-            border-top: 2px solid #0B0B0B;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: inline-block;
-        }
+        .splash h1 { font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, #FF7A00, #FFB347); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.5px; }
+        .splash p { color: #A0A0A0; margin-top: 12px; font-weight: 400; }
+        .btn-entrar { margin-top: 48px; background: #FF7A00; border: none; padding: 14px 40px; border-radius: 60px; font-size: 1.1rem; font-weight: 600; color: #0B0B0B; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 122, 0, 0.3); transition: transform 0.2s; display: flex; align-items: center; gap: 12px; margin: 0 auto; }
+        .btn-entrar:active { transform: scale(0.96); }
+        .spinner-load { width: 22px; height: 22px; border: 2px solid rgba(0,0,0,0.2); border-top: 2px solid #0B0B0B; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .app-container {
-            display: none;
-            max-width: 600px;
-            margin: 0 auto;
-            background: #121212;
-            min-height: 100vh;
-            position: relative;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
-        }
-        .main-content {
-            padding: 20px 20px 90px 20px;
-        }
-        .card {
-            background: rgba(30, 30, 40, 0.7);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .saldo-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .saldo-valor {
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-        }
-        .btn-olho {
-            background: none;
-            border: none;
-            color: #A0A0A0;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
+        .app-container { display: none; max-width: 600px; margin: 0 auto; background: #121212; min-height: 100vh; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+        .main-content { padding: 20px 20px 90px 20px; }
+        .card { background: rgba(30, 30, 40, 0.7); backdrop-filter: blur(12px); border-radius: 32px; padding: 24px; margin-bottom: 24px; box-shadow: 0 12px 28px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); }
+        .saldo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .saldo-valor { font-size: 2.8rem; font-weight: 700; letter-spacing: -1px; }
+        .btn-olho { background: none; border: none; color: #A0A0A0; font-size: 1.5rem; cursor: pointer; }
         .btn-olho:hover { color: #FF7A00; }
-        .resumo-grid {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-        .resumo-item {
-            flex: 1;
-            background: rgba(0,0,0,0.3);
-            border-radius: 24px;
-            padding: 16px;
-            text-align: center;
-        }
-        .resumo-label {
-            font-size: 0.8rem;
-            color: #A0A0A0;
-            margin-bottom: 6px;
-        }
-        .resumo-num {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-        .verde { color: #00C853; }
-        .vermelho { color: #FF3B30; }
-        .laranja { color: #FF7A00; }
-        canvas {
-            max-height: 220px;
-            width: 100%;
-        }
-        .transacoes-titulo {
-            font-size: 1.2rem;
-            margin: 12px 0 16px;
-            font-weight: 600;
-        }
-        .transacao-item {
-            background: rgba(20, 20, 28, 0.9);
-            border-radius: 24px;
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            animation: fadeSlideUp 0.3s ease;
-        }
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .transacao-icon {
-            width: 48px;
-            height: 48px;
-            background: #2A2A35;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        .transacao-info {
-            flex: 1;
-        }
-        .transacao-nome {
-            font-weight: 600;
-        }
-        .transacao-data {
-            font-size: 0.7rem;
-            color: #A0A0A0;
-        }
-        .transacao-categoria {
-            font-size: 0.75rem;
-            color: #FFB347;
-        }
-        .transacao-valor {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        .transacao-acoes {
-            display: flex;
-            gap: 12px;
-        }
-        .btn-acao {
-            background: none;
-            border: none;
-            color: #A0A0A0;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        .btn-acao:hover { color: #FF7A00; }
-        .btn-excluir:hover { color: #FF3B30; }
-        .empty-state {
-            text-align: center;
-            color: #A0A0A0;
-            padding: 32px;
-            font-style: italic;
-        }
-        .fab {
-            position: fixed;
-            bottom: 80px;
-            right: 24px;
-            background: #FF7A00;
-            width: 56px;
-            height: 56px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 16px rgba(255, 122, 0, 0.5);
-            cursor: pointer;
-            transition: transform 0.2s;
-            z-index: 300;
-        }
+        .resumo-grid { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .resumo-item { flex: 1; background: rgba(0,0,0,0.3); border-radius: 24px; padding: 16px; text-align: center; }
+        .resumo-label { font-size: 0.8rem; color: #A0A0A0; margin-bottom: 6px; }
+        .resumo-num { font-size: 1.4rem; font-weight: 700; }
+        .verde { color: #00C853; } .vermelho { color: #FF3B30; } .laranja { color: #FF7A00; }
+        canvas { max-height: 220px; width: 100%; }
+        .transacoes-titulo { font-size: 1.2rem; margin: 12px 0 16px; font-weight: 600; }
+        .transacao-item { background: rgba(20, 20, 28, 0.9); border-radius: 24px; padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 14px; animation: fadeSlideUp 0.3s ease; }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .transacao-icon { width: 48px; height: 48px; background: #2A2A35; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .transacao-info { flex: 1; }
+        .transacao-nome { font-weight: 600; } .transacao-data { font-size: 0.7rem; color: #A0A0A0; } .transacao-categoria { font-size: 0.75rem; color: #FFB347; }
+        .transacao-valor { font-weight: 700; font-size: 1.1rem; }
+        .transacao-acoes { display: flex; gap: 12px; }
+        .btn-acao { background: none; border: none; color: #A0A0A0; font-size: 1.2rem; cursor: pointer; }
+        .btn-acao:hover { color: #FF7A00; } .btn-excluir:hover { color: #FF3B30; }
+        .empty-state { text-align: center; color: #A0A0A0; padding: 32px; font-style: italic; }
+        .fab { position: fixed; bottom: 80px; right: 24px; background: #FF7A00; width: 56px; height: 56px; border-radius: 30px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(255, 122, 0, 0.5); cursor: pointer; z-index: 300; }
         .fab:active { transform: scale(0.92); }
         .fab i { font-size: 1.8rem; color: #0B0B0B; }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(18, 18, 24, 0.95);
-            backdrop-filter: blur(20px);
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 10px 24px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            border-radius: 28px 28px 0 0;
-            z-index: 400;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            background: none;
-            border: none;
-            color: #A0A0A0;
-            font-size: 0.65rem;
-            cursor: pointer;
-            transition: color 0.2s;
-            padding: 0 4px;
-        }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 600px; margin: 0 auto; background: rgba(18, 18, 24, 0.95); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 12px 10px 24px; border-top: 1px solid rgba(255,255,255,0.08); border-radius: 28px 28px 0 0; z-index: 400; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; color: #A0A0A0; font-size: 0.65rem; cursor: pointer; padding: 0 4px; }
         .nav-item i { font-size: 1.3rem; }
         .nav-item.active { color: #FF7A00; font-weight: 500; }
-        .nav-item.central-mais {
-            background: #FF7A00;
-            color: #0B0B0B;
-            width: 48px;
-            height: 48px;
-            border-radius: 40px;
-            justify-content: center;
-            margin-top: -18px;
-            box-shadow: 0 4px 12px rgba(255,122,0,0.4);
-        }
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .modal.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .modal-card {
-            background: #1E1E28;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 48px;
-            padding: 28px;
-            animation: fadeZoom 0.2s ease;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-        .modal-card input, .modal-card select {
-            width: 100%;
-            padding: 14px;
-            margin: 8px 0;
-            background: #2C2C38;
-            border: none;
-            border-radius: 28px;
-            color: white;
-            font-family: 'Inter', sans-serif;
-        }
-        .btn-modal {
-            background: #FF7A00;
-            border: none;
-            padding: 14px;
-            border-radius: 40px;
-            width: 100%;
-            font-weight: bold;
-            margin-top: 12px;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-        }
-        .btn-modal.cancel {
-            background: #2C2C38;
-            margin-top: 8px;
-        }
-        .screen { display: block; }
-        .screen.hidden { display: none; }
-        .tag {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        .tag-limite { background: rgba(255,122,0,0.2); color: #FF7A00; }
-        .tag-economia { background: rgba(0,200,83,0.2); color: #00C853; }
-        .item-mercado {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid #2A2A35;
-        }
-        .item-mercado input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: #FF7A00;
-        }
-        .item-mercado input[type="number"] {
-            width: 70px;
-            padding: 8px;
-            background: #2C2C38;
-            border: none;
-            border-radius: 12px;
-            color: white;
-            text-align: right;
-        }
-        .categoria-mercado-titulo {
-            font-size: 0.85rem;
-            color: #FFB347;
-            font-weight: 600;
-            margin: 16px 0 8px;
-        }
-        .progress-bar-bg {
-            width: 100%;
-            height: 8px;
-            background: #2C2C38;
-            border-radius: 10px;
-            margin: 8px 0;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #FF7A00, #FFB347);
-            transition: width 0.4s;
-        }
+        .nav-item.central-mais { background: #FF7A00; color: #0B0B0B; width: 48px; height: 48px; border-radius: 40px; justify-content: center; margin-top: -18px; box-shadow: 0 4px 12px rgba(255,122,0,0.4); }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; visibility: hidden; opacity: 0; transition: 0.2s; }
+        .modal.active { visibility: visible; opacity: 1; }
+        .modal-card { background: #1E1E28; width: 90%; max-width: 400px; border-radius: 48px; padding: 28px; animation: fadeZoom 0.2s ease; max-height: 85vh; overflow-y: auto; }
+        .modal-card input, .modal-card select { width: 100%; padding: 14px; margin: 8px 0; background: #2C2C38; border: none; border-radius: 28px; color: white; font-family: 'Inter', sans-serif; }
+        .btn-modal { background: #FF7A00; border: none; padding: 14px; border-radius: 40px; width: 100%; font-weight: bold; margin-top: 12px; cursor: pointer; font-family: 'Inter', sans-serif; }
+        .btn-modal.cancel { background: #2C2C38; margin-top: 8px; }
+        .screen { display: block; } .screen.hidden { display: none; }
+        .progress-bar-bg { width: 100%; height: 8px; background: #2C2C38; border-radius: 10px; margin: 8px 0; }
+        .progress-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #FF7A00, #FFB347); transition: width 0.4s; }
+        .tabela-mercado { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85rem; }
+        .tabela-mercado th { text-align: left; padding: 8px 4px; color: #A0A0A0; font-weight: 500; font-size: 0.7rem; border-bottom: 1px solid #2A2A35; }
+        .tabela-mercado td { padding: 8px 4px; border-bottom: 1px solid #2A2A35; }
+        .tabela-mercado td:last-child { text-align: center; }
         @media (max-width: 480px) {
-            .saldo-valor { font-size: 2rem; }
-            .resumo-num { font-size: 1rem; }
+            .saldo-valor { font-size: 2rem; } .resumo-num { font-size: 1rem; }
+            .tabela-mercado { font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -408,10 +96,7 @@
         <!-- TELA INÍCIO -->
         <div id="screenInicio" class="screen">
             <div class="card">
-                <div class="saldo-header">
-                    <span style="font-weight:500;">Saldo disponível</span>
-                    <button class="btn-olho" id="toggleSaldoBtn"><i class="far fa-eye"></i></button>
-                </div>
+                <div class="saldo-header"><span style="font-weight:500;">Saldo disponível</span><button class="btn-olho" id="toggleSaldoBtn"><i class="far fa-eye"></i></button></div>
                 <div class="saldo-valor" id="saldoDisplay">R$ 0,00</div>
                 <div style="font-size:0.75rem; color:#A0A0A0;">Saldo atualizado em tempo real</div>
             </div>
@@ -432,27 +117,32 @@
             <div class="transacoes-titulo"><i class="fas fa-list-ul"></i> Últimas movimentações</div>
             <div id="transacoesLista"></div>
         </div>
-        <!-- TELA MERCADO -->
+        <!-- TELA MERCADO (REFEITA) -->
         <div id="screenMercado" class="screen hidden">
             <div class="card">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <h3><i class="fas fa-shopping-cart"></i> Compra do mês</h3>
-                    <button class="btn-acao" id="btnLimiteMercado" style="font-size:0.85rem;"><i class="fas fa-sliders-h"></i> Limite</button>
+                    <button class="btn-acao" id="btnLimiteMercado" style="font-size:0.85rem;"><i class="fas fa-sliders-h"></i> Definir limite</button>
                 </div>
                 <div style="margin: 12px 0;">
                     <span>Orçamento máximo: <strong class="laranja" id="limiteMercadoValor">R$ 1.200,00</strong></span>
                     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressoMercado" style="width:0%;"></div></div>
-                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
-                        <span>Total estipulado: <strong id="totalEstipuladoMercado">R$0,00</strong></span>
-                        <span>Total pago: <strong id="totalPagoMercado">R$0,00</strong></span>
-                    </div>
                 </div>
-                <div style="font-size:0.85rem; margin-top: 8px;">
-                    <span>💾 Economia: <strong class="verde" id="economiaMercado">R$0,00</strong></span>
+                <button class="btn-modal" id="btnAdicionarItem" style="background:#2C2C38; width:auto; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;"><i class="fas fa-plus"></i> Adicionar item</button>
+                <div style="overflow-x: auto; margin-top: 16px;">
+                    <table class="tabela-mercado" id="tabelaMercado">
+                        <thead><tr><th>Item</th><th>Valor Planejado</th><th>Valor Pago</th><th>Diferença</th><th>%</th><th></th></tr></thead>
+                        <tbody id="tabelaMercadoBody"></tbody>
+                    </table>
                 </div>
+                <div id="emptyMercado" class="empty-state" style="padding:16px;">Nenhum item adicionado ainda.</div>
+                <div style="display:flex; justify-content: space-between; margin-top: 16px; font-weight: 500;">
+                    <span>Total planejado: <strong id="totalEstipuladoMercado">R$0,00</strong></span>
+                    <span>Total pago: <strong id="totalPagoMercado">R$0,00</strong></span>
+                </div>
+                <div style="font-size:0.9rem; margin-top: 8px;">💾 <strong>Economia: <span class="verde" id="economiaMercado">R$0,00</span></strong></div>
             </div>
-            <div id="listaMercadoContainer"></div>
-            <button class="btn-modal" id="btnFinalizarCompra" style="margin-top:16px;"><i class="fas fa-check-circle"></i> Finalizar compra e lançar despesa</button>
+            <button class="btn-modal" id="btnFinalizarCompra" style="margin-top:8px;"><i class="fas fa-check-circle"></i> Finalizar compra e lançar despesa</button>
             <div class="card" style="margin-top:20px;">
                 <h4 style="margin-bottom:12px;">📋 Histórico de compras</h4>
                 <div id="historicoMercado"></div>
@@ -525,9 +215,20 @@
         <button class="btn-modal cancel" id="fecharLimiteMercadoBtn">Cancelar</button>
     </div>
 </div>
+<!-- MODAL ADICIONAR ITEM MERCADO -->
+<div id="modalItemMercado" class="modal">
+    <div class="modal-card">
+        <h3>Adicionar item</h3>
+        <input type="text" id="inputNomeItem" placeholder="Buscar item..." list="todosItensList" autocomplete="off" oninput="sugerirItens()">
+        <datalist id="todosItensList"></datalist>
+        <input type="number" id="inputEstipuladoItem" placeholder="Valor planejado (R$)" step="0.01" min="0">
+        <input type="number" id="inputPagoItem" placeholder="Valor pago (R$)" step="0.01" min="0">
+        <button class="btn-modal" id="salvarItemMercadoBtn">Adicionar</button>
+        <button class="btn-modal cancel" id="fecharItemMercadoBtn">Cancelar</button>
+    </div>
+</div>
 <script>
 (function() {
-    // ---------- CATEGORIAS ----------
     const CATEGORIAS = {
         "Renda": ["Salário","Freelancer","Investimentos","Poupança","Doações recebidas","Outras receitas"],
         "Moradia": ["Aluguel ou financiamento","Condomínio","IPTU","Energia elétrica","Água","Gás de cozinha","Internet residencial","TV/streaming","Manutenção da casa","Móveis e decoração"],
@@ -541,33 +242,29 @@
         "Família e Dependentes": ["Fraldas","Escola filhos","Babá","Mesada","Pets","Presentes familiares","Plano saúde familiar","Cuidados idosos","Transporte familiar","Emergências familiares"],
         "Financeiros e Outros": ["Impostos","Empréstimos","Cartão crédito","Juros","Seguro residencial","Doações","Taxas bancárias","Reserva emergência","Tarifas","Outros"]
     };
-    // Categorias do mercado
-    const MERCADO_ITENS = {
-        "Alimentos básicos": ["Arroz","Feijão","Macarrão","Açúcar","Sal","Farinha de trigo","Farinha de mandioca","Óleo de cozinha","Azeite","Café","Leite","Manteiga","Margarina","Pão","Biscoitos","Cereais","Ovos","Queijo","Presunto","Molho de tomate"],
-        "Carnes e proteínas": ["Frango","Carne bovina","Peixe","Linguiça","Salsicha","Atum enlatado","Sardinha","Hambúrguer","Nuggets","Iogurte"],
-        "Hortifruti": ["Batata","Cebola","Alho","Tomate","Cenoura","Alface","Repolho","Banana","Maçã","Laranja","Mamão","Limão","Abacaxi","Uva","Pimentão"],
-        "Bebidas": ["Suco","Refrigerante","Água mineral","Chá","Achocolatado"],
-        "Higiene pessoal": ["Sabonete","Creme dental","Escova de dentes","Fio Dental","Enxaguante Bucal","Shampoo","Condicionador","Desodorante","Papel higiênico","Absorventes"],
-        "Limpeza doméstica": ["Sabão em Pó","Amaciante","Detergente","Multiuso","Lustra Móvel","Desinfetante","Água sanitária","Esponja","Sacos de lixo","Pano de chão","Vassoura","Rodo","Papel toalha","Limpador de vidro","Desengordurante"],
-        "Congelados e práticos": ["Pizza congelada","Lasanha congelada","Legumes congelados","Sorvete","Pão de queijo"],
-        "Temperos e complementos": ["Ketchup","Maionese","Mostarda","Vinagre","Pimenta-do-reino","Caldo de carne","Orégano","Cominho","Canela","Fermento"],
-        "Diversos": ["Ração para pets","Pilhas","Velas","Fósforos","Guardanapos","Papel alumínio","Filme plástico","Sacolas reutilizáveis","Toalhas umedecidas","Sabão em barra"]
-    };
+    const TODOS_ITENS_MERCADO = [
+        "Arroz","Feijão","Macarrão","Açúcar","Sal","Farinha de trigo","Farinha de mandioca","Óleo de cozinha","Azeite","Café","Leite","Manteiga","Margarina","Pão","Biscoitos","Cereais","Ovos","Queijo","Presunto","Molho de tomate",
+        "Frango","Carne bovina","Peixe","Linguiça","Salsicha","Atum enlatado","Sardinha","Hambúrguer","Nuggets","Iogurte",
+        "Batata","Cebola","Alho","Tomate","Cenoura","Alface","Repolho","Banana","Maçã","Laranja","Mamão","Limão","Abacaxi","Uva","Pimentão",
+        "Suco","Refrigerante","Água mineral","Chá","Achocolatado",
+        "Sabonete","Creme dental","Escova de dentes","Fio Dental","Enxaguante Bucal","Shampoo","Condicionador","Desodorante","Papel higiênico","Absorventes",
+        "Sabão em Pó","Amaciante","Detergente","Multiuso","Lustra Móvel","Desinfetante","Água sanitária","Esponja","Sacos de lixo","Pano de chão","Vassoura","Rodo","Papel toalha","Limpador de vidro","Desengordurante",
+        "Pizza congelada","Lasanha congelada","Legumes congelados","Sorvete","Pão de queijo",
+        "Ketchup","Maionese","Mostarda","Vinagre","Pimenta-do-reino","Caldo de carne","Orégano","Cominho","Canela","Fermento",
+        "Ração para pets","Pilhas","Velas","Fósforos","Guardanapos","Papel alumínio","Filme plástico","Sacolas reutilizáveis","Toalhas umedecidas","Sabão em barra"
+    ];
     const CATEGORIA_EMOJI = {
         "Renda":"💰","Moradia":"🏠","Alimentação":"🍔","Transporte":"🚗","Saúde":"💊","Educação":"📚",
         "Comunicação e Tecnologia":"📱","Vestuário e Cuidados Pessoais":"👕","Lazer e Entretenimento":"🎬",
         "Família e Dependentes":"👪","Financeiros e Outros":"💸","Supermercado":"🛒"
     };
-
-    // ---------- ESTADO ----------
     let transacoes = [];
     let editingId = null;
     let saldoVisivel = true;
     let lineChart, pieChart, lineFull, pieFull;
-    // Estado do mercado
-    let compraAtual = []; // { nome, categoria, estipulado, pago, marcado }
+    let compraAtual = [];
     let limiteMercado = 1200;
-    let historicoCompras = []; // [{ mes, ano, limite, itens: [...], totalEstipulado, totalPago, economia, data }]
+    let historicoCompras = [];
 
     function salvarLocal() {
         localStorage.setItem("wellingtonxp_transacoes", JSON.stringify(transacoes));
@@ -575,7 +272,6 @@
         localStorage.setItem("wellingtonxp_limiteMercado", limiteMercado);
         localStorage.setItem("wellingtonxp_historicoCompras", JSON.stringify(historicoCompras));
     }
-
     function carregarLocal() {
         try { transacoes = JSON.parse(localStorage.getItem("wellingtonxp_transacoes")) || []; } catch(e) { transacoes = []; }
         try { compraAtual = JSON.parse(localStorage.getItem("wellingtonxp_compraAtual")) || []; } catch(e) { compraAtual = []; }
@@ -594,18 +290,8 @@
                 { id:8, data:"2025-02-25", tipo:"despesa", categoriaPai:"Comunicação e Tecnologia", categoria:"Streaming", valor:49.9, descricao:"Streaming" },
             ];
         }
-        if (compraAtual.length === 0) inicializarCompraVazia();
         salvarLocal();
         atualizarTudo();
-    }
-
-    function inicializarCompraVazia() {
-        compraAtual = [];
-        for (let [cat, itens] of Object.entries(MERCADO_ITENS)) {
-            itens.forEach(item => {
-                compraAtual.push({ nome: item, categoria: cat, estipulado: 0, pago: 0, marcado: false });
-            });
-        }
     }
 
     function getSaldoTotal() { return transacoes.reduce((acc,t)=>acc+(t.tipo==="receita"?t.valor:-t.valor),0); }
@@ -632,8 +318,7 @@
 
     function atualizarTudo() {
         const saldo = getSaldoTotal();
-        const el = document.getElementById("saldoDisplay");
-        el.innerText = saldoVisivel ? `R$ ${saldo.toFixed(2).replace('.',',')}` : "••••••";
+        document.getElementById("saldoDisplay").innerText = saldoVisivel ? `R$ ${saldo.toFixed(2).replace('.',',')}` : "••••••";
         const r = getResumoMes();
         document.getElementById("totalReceitas").innerHTML = `R$ ${r.receitas.toFixed(2)}`;
         document.getElementById("totalDespesas").innerHTML = `R$ ${r.despesas.toFixed(2)}`;
@@ -664,7 +349,6 @@
             container.appendChild(card);
         });
     }
-
     document.getElementById("transacoesLista").addEventListener("click",(e)=>{
         const btn = e.target.closest("button"); if(!btn) return;
         const id = parseInt(btn.dataset.id);
@@ -702,11 +386,11 @@
         } else {
             transacoes.push({id:Date.now()+Math.floor(Math.random()*1000), data, tipo, categoriaPai:catPai, categoria:cat, valor, descricao:desc});
         }
-        fecharModal();
+        fecharModalTransacao();
         atualizarTudo();
     }
 
-    function fecharModal(){
+    function fecharModalTransacao(){
         document.getElementById("modalTransacao").classList.remove("active");
         editingId=null;
         document.getElementById("modalTitle").innerText="Nova transação";
@@ -725,7 +409,6 @@
         else { lineChart=new Chart(document.getElementById("lineChart").getContext("2d"),{type:'line',data:{labels:evol.datas,datasets:[{label:'Saldo',data:evol.saldos,borderColor:'#FF7A00',tension:0.2,fill:false}]},options:{responsive:true,plugins:{legend:{labels:{color:'#fff'}}}}}); }
         if(pieChart){ pieChart.data.labels=despesasCat.labels; pieChart.data.datasets[0].data=despesasCat.values; pieChart.update(); }
         else { pieChart=new Chart(document.getElementById("pieChart").getContext("2d"),{type:'pie',data:{labels:despesasCat.labels,datasets:[{data:despesasCat.values,backgroundColor:cores.slice(0,despesasCat.labels.length)}]},options:{responsive:true,plugins:{legend:{labels:{color:'#fff'}}}}}); }
-        // Full charts
         if(document.getElementById("screenRelatorios").classList.contains("hidden")) return;
         if(lineFull){ lineFull.data.labels=evol.datas; lineFull.data.datasets[0].data=evol.saldos; lineFull.update(); }
         else { const ctx=document.getElementById("lineChartFull")?.getContext("2d"); if(ctx) lineFull=new Chart(ctx,{type:'line',data:{labels:evol.datas,datasets:[{label:'Evolução',data:evol.saldos,borderColor:'#FF7A00'}]},options:{responsive:true}}); }
@@ -733,37 +416,43 @@
         else { const ctx=document.getElementById("pieChartFull")?.getContext("2d"); if(ctx) pieFull=new Chart(ctx,{type:'pie',data:{labels:despesasCat.labels,datasets:[{data:despesasCat.values,backgroundColor:cores.slice(0,despesasCat.labels.length)}]},options:{responsive:true}}); }
     }
 
-    // ---------- MERCADO ----------
+    // ---------- MERCADO NOVO ----------
     function renderMercado() {
-        const container = document.getElementById("listaMercadoContainer");
         document.getElementById("limiteMercadoValor").innerText = `R$ ${limiteMercado.toFixed(2).replace('.',',')}`;
         document.getElementById("inputLimiteMercado").value = limiteMercado;
-        let totalEstipulado = 0, totalPago = 0;
-        compraAtual.forEach(item => { if(item.marcado) { totalEstipulado += item.estipulado||0; totalPago += item.pago||0; } });
-        const economia = totalEstipulado - totalPago;
-        const percLimite = limiteMercado > 0 ? Math.min(100, (totalPago / limiteMercado) * 100) : 0;
-        document.getElementById("progressoMercado").style.width = percLimite + "%";
-        document.getElementById("progressoMercado").style.background = percLimite > 90 ? "linear-gradient(90deg, #FF3B30, #FF7A00)" : "linear-gradient(90deg, #FF7A00, #FFB347)";
-        document.getElementById("totalEstipuladoMercado").innerText = `R$ ${totalEstipulado.toFixed(2)}`;
+        let totalEst = 0, totalPago = 0;
+        compraAtual.forEach(i => { totalEst += i.estipulado||0; totalPago += i.pago||0; });
+        const economia = totalEst - totalPago;
+        const percLimite = limiteMercado > 0 ? Math.min(100, (totalPago / limiteMercado)*100) : 0;
+        const barra = document.getElementById("progressoMercado");
+        barra.style.width = percLimite + "%";
+        barra.style.background = percLimite > 90 ? "linear-gradient(90deg, #FF3B30, #FF7A00)" : "linear-gradient(90deg, #FF7A00, #FFB347)";
+        document.getElementById("totalEstipuladoMercado").innerText = `R$ ${totalEst.toFixed(2)}`;
         document.getElementById("totalPagoMercado").innerText = `R$ ${totalPago.toFixed(2)}`;
         document.getElementById("economiaMercado").innerText = `R$ ${economia.toFixed(2)}`;
-        // Agrupar itens por categoria
-        let html = '';
-        let ultimaCat = '';
-        for (let [cat, itens] of Object.entries(MERCADO_ITENS)) {
-            html += `<div class="categoria-mercado-titulo">${cat}</div>`;
-            itens.forEach(nome => {
-                const item = compraAtual.find(i => i.nome === nome && i.categoria === cat) || { nome, categoria: cat, estipulado: 0, pago: 0, marcado: false };
-                html += `<div class="item-mercado">
-                    <input type="checkbox" data-nome="${nome}" data-cat="${cat}" ${item.marcado?'checked':''} onchange="toggleItemMercado(this)">
-                    <span style="flex:1;font-size:0.85rem;">${nome}</span>
-                    <input type="number" placeholder="Est." value="${item.estipulado||''}" data-nome="${nome}" data-cat="${cat}" data-tipo="estipulado" onchange="updateItemMercado(this)" step="0.01" min="0" style="width:65px;">
-                    <input type="number" placeholder="Pago" value="${item.pago||''}" data-nome="${nome}" data-cat="${cat}" data-tipo="pago" onchange="updateItemMercado(this)" step="0.01" min="0" style="width:65px;">
-                    <span style="font-size:0.7rem;width:55px;text-align:right;color:${(item.estipulado||0)>(item.pago||0)?'#00C853':'#FF3B30'}">${item.estipulado&&item.pago? ((item.estipulado-item.pago)>=0?'↓':'↑')+' R$'+Math.abs(item.estipulado-item.pago).toFixed(2):''}</span>
-                </div>`;
-            });
+        const tbody = document.getElementById("tabelaMercadoBody");
+        const emptyMsg = document.getElementById("emptyMercado");
+        const tabela = document.getElementById("tabelaMercado");
+        if (compraAtual.length === 0) {
+            emptyMsg.style.display = "block";
+            tabela.style.display = "none";
+        } else {
+            emptyMsg.style.display = "none";
+            tabela.style.display = "table";
+            tbody.innerHTML = compraAtual.map(item => {
+                const dif = (item.estipulado||0) - (item.pago||0);
+                const perc = (item.estipulado||0) !== 0 ? (Math.abs(dif) / item.estipulado * 100).toFixed(1) : 0;
+                const cor = dif >= 0 ? '#00C853' : '#FF3B30';
+                return `<tr>
+                    <td>${sanitize(item.nome)}</td>
+                    <td>R$${(item.estipulado||0).toFixed(2)}</td>
+                    <td>R$${(item.pago||0).toFixed(2)}</td>
+                    <td style="color:${cor}; font-weight:600;">${dif>=0?'+':'-'}R$${Math.abs(dif).toFixed(2)}</td>
+                    <td style="color:${cor};">${perc}%</td>
+                    <td><button class="btn-acao btn-excluir" onclick="removerItemMercado('${item.nome}')"><i class="fas fa-trash"></i></button></td>
+                </tr>`;
+            }).join('');
         }
-        container.innerHTML = html;
         // Histórico
         const histContainer = document.getElementById("historicoMercado");
         if (historicoCompras.length === 0) {
@@ -772,40 +461,53 @@
             histContainer.innerHTML = historicoCompras.slice().reverse().slice(0,5).map(h => `
                 <div style="background:#2C2C38;border-radius:16px;padding:12px;margin-bottom:8px;">
                     <div style="display:flex;justify-content:space-between;"><strong>${h.mes}/${h.ano}</strong><span>Limite: R$${h.limite.toFixed(2)}</span></div>
-                    <div style="font-size:0.8rem;">Estipulado: R$${h.totalEstipulado.toFixed(2)} | Pago: R$${h.totalPago.toFixed(2)}</div>
+                    <div style="font-size:0.8rem;">Planejado: R$${h.totalEstipulado.toFixed(2)} | Pago: R$${h.totalPago.toFixed(2)}</div>
                     <div style="color:#00C853;font-size:0.8rem;">Economia: R$${h.economia.toFixed(2)}</div>
                 </div>
             `).join('');
         }
     }
 
-    window.toggleItemMercado = function(cb) {
-        const item = compraAtual.find(i => i.nome === cb.dataset.nome && i.categoria === cb.dataset.cat);
-        if (item) item.marcado = cb.checked;
-        else compraAtual.push({ nome: cb.dataset.nome, categoria: cb.dataset.cat, estipulado: 0, pago: 0, marcado: true });
+    window.removerItemMercado = function(nome) {
+        compraAtual = compraAtual.filter(i => i.nome !== nome);
         renderMercado();
         salvarLocal();
     };
 
-    window.updateItemMercado = function(input) {
-        let item = compraAtual.find(i => i.nome === input.dataset.nome && i.categoria === input.dataset.cat);
-        if (!item) {
-            item = { nome: input.dataset.nome, categoria: input.dataset.cat, estipulado: 0, pago: 0, marcado: true };
-            compraAtual.push(item);
-        }
-        const val = parseFloat(input.value) || 0;
-        if (input.dataset.tipo === 'estipulado') item.estipulado = val;
-        else item.pago = val;
-        item.marcado = true; // força marcado ao editar valor
+    function abrirModalItem() {
+        document.getElementById("inputNomeItem").value = "";
+        document.getElementById("inputEstipuladoItem").value = "";
+        document.getElementById("inputPagoItem").value = "";
+        preencherDatalistItens();
+        document.getElementById("modalItemMercado").classList.add("active");
+    }
+
+    function preencherDatalistItens() {
+        const datalist = document.getElementById("todosItensList");
+        datalist.innerHTML = TODOS_ITENS_MERCADO.map(i => `<option value="${i}">`).join('');
+    }
+
+    window.sugerirItens = function() {
+        // A função preenche o datalist, que já está completo. O navegador faz o filtro.
+    };
+
+    function salvarItemMercado() {
+        const nome = document.getElementById("inputNomeItem").value.trim();
+        const estipulado = parseFloat(document.getElementById("inputEstipuladoItem").value) || 0;
+        const pago = parseFloat(document.getElementById("inputPagoItem").value) || 0;
+        if (!nome) { alert("Selecione ou digite um item."); return; }
+        // Remove item existente com mesmo nome, se houver
+        compraAtual = compraAtual.filter(i => i.nome !== nome);
+        compraAtual.push({ nome, estipulado, pago });
+        document.getElementById("modalItemMercado").classList.remove("active");
         renderMercado();
         salvarLocal();
-    };
+    }
 
     function finalizarCompra() {
-        const itensMarcados = compraAtual.filter(i => i.marcado && i.pago > 0);
-        if (itensMarcados.length === 0) { alert("Marque pelo menos um item com preço pago."); return; }
-        const totalPago = itensMarcados.reduce((s,i) => s + (i.pago||0), 0);
-        const totalEstipulado = itensMarcados.reduce((s,i) => s + (i.estipulado||0), 0);
+        if (compraAtual.length === 0) { alert("Adicione pelo menos um item à lista."); return; }
+        const totalPago = compraAtual.reduce((s,i) => s + (i.pago||0), 0);
+        const totalEstipulado = compraAtual.reduce((s,i) => s + (i.estipulado||0), 0);
         const economia = totalEstipulado - totalPago;
         const now = new Date();
         const desc = `Supermercado ${now.toLocaleDateString()}`;
@@ -819,31 +521,28 @@
             valor: totalPago,
             descricao: desc
         });
-        // Salvar no histórico
         historicoCompras.push({
             mes: now.getMonth()+1,
             ano: now.getFullYear(),
             limite: limiteMercado,
-            itens: JSON.parse(JSON.stringify(itensMarcados)),
+            itens: JSON.parse(JSON.stringify(compraAtual)),
             totalEstipulado,
             totalPago,
             economia,
             data: now.toISOString()
         });
-        // Resetar compra atual
-        inicializarCompraVazia();
+        compraAtual = [];
         salvarLocal();
         atualizarTudo();
         alert(`Compra finalizada! Total pago: R$${totalPago.toFixed(2)}\nEconomia: R$${economia.toFixed(2)}`);
     }
 
-    // ---------- NAVEGAÇÃO ----------
     function showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
         const target = document.getElementById(`screen${screenId.charAt(0).toUpperCase() + screenId.slice(1)}`);
         if (target) target.classList.remove('hidden');
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-        const mapNav = { inicio: "inicio", mercado: "mercado", relatorios: "relatorios", cartoes: "cartoes", config: "config" };
+        const mapNav = { inicio:"inicio", mercado:"mercado", relatorios:"relatorios", cartoes:"cartoes", config:"config" };
         const navId = mapNav[screenId];
         if (navId) document.querySelector(`[data-nav="${navId}"]`).classList.add('active');
         if (screenId === 'mercado') renderMercado();
@@ -856,17 +555,14 @@
         Object.keys(CATEGORIAS).forEach(c => { const o = document.createElement("option"); o.value=c; o.textContent=c; sel.appendChild(o); });
         sel.addEventListener("change", atualizarSubcategorias);
     }
-
     function atualizarSubcategorias() {
         const catPai = document.getElementById("modalCategoriaPai").value;
         const dl = document.getElementById("subcategoriaList");
         dl.innerHTML = "";
         if (catPai && CATEGORIAS[catPai]) CATEGORIAS[catPai].forEach(s => { const o = document.createElement("option"); o.value=s; dl.appendChild(o); });
     }
-
     function sanitize(s) { const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
 
-    // ---------- INIT ----------
     function init() {
         preencherSelectCategoriaPai();
         document.getElementById("toggleSaldoBtn").addEventListener("click",()=>{
@@ -876,20 +572,20 @@
         });
         document.getElementById("toggleConfigSaldo").addEventListener("click",()=>document.getElementById("toggleSaldoBtn").click());
         document.getElementById("resetMockBtn").addEventListener("click",()=>{
-            if(confirm("Restaurar dados mock? Suas transações serão perdidas.")){
+            if(confirm("Restaurar dados mock?")){
                 transacoes=[{id:1,data:"2025-03-01",tipo:"receita",categoriaPai:"Renda",categoria:"Salário",valor:5200,descricao:"Salário março"},{id:2,data:"2025-03-05",tipo:"despesa",categoriaPai:"Alimentação",categoria:"Supermercado",valor:320.5,descricao:"Mercado"},{id:3,data:"2025-03-08",tipo:"despesa",categoriaPai:"Transporte",categoria:"Uber/99/táxi",valor:58.9,descricao:"Uber"},{id:4,data:"2025-03-12",tipo:"despesa",categoriaPai:"Lazer e Entretenimento",categoria:"Cinema",valor:189.9,descricao:"Cinema"},{id:5,data:"2025-03-15",tipo:"receita",categoriaPai:"Renda",categoria:"Freelancer",valor:850,descricao:"Projeto Web"},{id:6,data:"2025-03-18",tipo:"despesa",categoriaPai:"Saúde",categoria:"Medicamentos",valor:145,descricao:"Farmácia"},{id:7,data:"2025-03-20",tipo:"despesa",categoriaPai:"Alimentação",categoria:"Restaurantes",valor:210.3,descricao:"Restaurante"},{id:8,data:"2025-02-25",tipo:"despesa",categoriaPai:"Comunicação e Tecnologia",categoria:"Streaming",valor:49.9,descricao:"Streaming"}];
-                inicializarCompraVazia();
+                compraAtual=[];
                 historicoCompras=[];
                 limiteMercado=1200;
                 salvarLocal();
                 atualizarTudo();
             }
         });
-        document.getElementById("fabAdd").addEventListener("click",()=>{ fecharModal(); document.getElementById("modalTransacao").classList.add("active"); });
-        document.getElementById("navCentralMais").addEventListener("click",()=>{ fecharModal(); document.getElementById("modalTransacao").classList.add("active"); });
+        document.getElementById("fabAdd").addEventListener("click",()=>{ fecharModalTransacao(); document.getElementById("modalTransacao").classList.add("active"); });
+        document.getElementById("navCentralMais").addEventListener("click",()=>{ fecharModalTransacao(); document.getElementById("modalTransacao").classList.add("active"); });
         document.getElementById("salvarTransacaoBtn").addEventListener("click",salvarTransacaoModal);
-        document.getElementById("fecharModalBtn").addEventListener("click",fecharModal);
-        document.getElementById("modalTransacao").addEventListener("click",(e)=>{ if(e.target===document.getElementById("modalTransacao")) fecharModal(); });
+        document.getElementById("fecharModalBtn").addEventListener("click",fecharModalTransacao);
+        document.getElementById("modalTransacao").addEventListener("click",(e)=>{ if(e.target===document.getElementById("modalTransacao")) fecharModalTransacao(); });
         document.querySelectorAll("[data-nav]").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.nav)));
         // Mercado
         document.getElementById("btnLimiteMercado").addEventListener("click",()=>document.getElementById("modalLimiteMercado").classList.add("active"));
@@ -898,6 +594,9 @@
             if(v>0){ limiteMercado=v; salvarLocal(); renderMercado(); document.getElementById("modalLimiteMercado").classList.remove("active"); }
         });
         document.getElementById("fecharLimiteMercadoBtn").addEventListener("click",()=>document.getElementById("modalLimiteMercado").classList.remove("active"));
+        document.getElementById("btnAdicionarItem").addEventListener("click",abrirModalItem);
+        document.getElementById("salvarItemMercadoBtn").addEventListener("click",salvarItemMercado);
+        document.getElementById("fecharItemMercadoBtn").addEventListener("click",()=>document.getElementById("modalItemMercado").classList.remove("active"));
         document.getElementById("btnFinalizarCompra").addEventListener("click",finalizarCompra);
         // CSV
         document.getElementById("csvUpload").addEventListener("change",function(e){
